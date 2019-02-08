@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bughound';
+  employee=[];
+
+  submit(){
+    this.employee.push()
+    this.employee.toString()
+  }
 }
