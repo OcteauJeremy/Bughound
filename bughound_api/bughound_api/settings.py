@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6#@elvum53--28ct&ers8a2enb3ou+(5__qf6n775o!6ui*nzi'
+SECRET_KEY = '%oi)fn32$&&usuto3=8_p1mmuz9ut+e-r4t4c#d_y=y0+owkz9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bugs'
+    'bugs',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -78,12 +79,11 @@ WSGI_APPLICATION = 'bughound_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-          # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'bughound',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'password',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'bughound',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '',
+        'PORT': ''
     }
 }
 
@@ -124,8 +124,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-MEDIA_URL = '/uploads/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')

@@ -125,3 +125,13 @@ class Attachment(models.Model):
         ordering = ['-id']
         db_table = 'attachments'
 
+
+class Employee(models.Model):
+    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    user_level = models.IntegerField()
+
+    class Meta:
+        ordering = ['-id']
+        db_table = 'employees'
