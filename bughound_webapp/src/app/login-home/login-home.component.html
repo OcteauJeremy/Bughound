@@ -1,0 +1,25 @@
+<div class="login-home">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">BUGHOUND</h4>
+                <p class="category">Enter your creditentials</p>
+            </div>
+            <div class="content">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" placeholder="Username" [(ngModel)]="creditentials.username">
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="creditentials.password">
+                    </div>
+                </div>
+                <button class="btn btn-danger btn-fill" (click)="login()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -91,7 +91,7 @@ class Bug(models.Model):
     description = models.TextField()
     suggested_fix = models.TextField()
     report_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reported_bugs')
-    date = models.DateField()
+    reported_date = models.DateField()
 
     functional_area = models.ForeignKey(Area, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_bugs')
@@ -104,13 +104,12 @@ class Bug(models.Model):
         choices=PRIORITY,
         default=0
     )
-
     resolution = models.IntegerField(
         choices=RESOLUTION,
         default=0
     )
-
     resolution_version = models.ForeignKey(Version, on_delete=models.CASCADE)
+    solved_date = models.DateField()
 
     class Meta:
         ordering = ['-id']

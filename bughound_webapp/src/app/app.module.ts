@@ -1,23 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing';
+import { NavbarModule } from './shared/navbar/navbar.module';
+import { FooterModule } from './shared/footer/footer.module';
+import { SidebarModule } from './sidebar/sidebar.module';
 import { AppComponent } from './app.component';
-import {EmployeeService} from './services/employee.service';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { LoginHomeComponent } from './login-home/login-home.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule
+      BrowserAnimationsModule,
+      FormsModule,
+      RouterModule,
+      NavbarModule,
+      FooterModule,
+      SidebarModule,
+      AppRoutingModule,
+      HttpClientModule,
+      ToastrModule.forRoot()
   ],
-  providers: [EmployeeService],
+  declarations: [
+      AppComponent,
+      AdminLayoutComponent,
+      LoginLayoutComponent
+  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

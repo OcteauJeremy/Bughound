@@ -141,6 +141,7 @@ STATIC_URL = '/static/'
 
 
 # REST FRAMEWORK
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',

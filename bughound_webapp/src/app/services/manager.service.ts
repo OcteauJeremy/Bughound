@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class ManagerService {
 
-  public baseUrl = 'http://localhost:8000';
+  public baseUrl = environment.apiUrl;
   // public cookieService: CookieService;
 
   constructor(protected http: HttpClient) {
@@ -17,14 +17,16 @@ export class ManagerService {
   }
 
   static generateHeadersAuth(headers: HttpHeaders) {
-    const token = localStorage.getItem('nyl2pronos-token');
+    const token = localStorage.getItem('bughound-token');
+
 
     if (token) {
       headers = headers.append('x-access-token', token);
     }
     return headers;
   }
-  get(url) {
+
+  get(url, disableHeaders = false) {
     let headers = new HttpHeaders();
 
     headers = ManagerService.generateHeadersAuth(headers);

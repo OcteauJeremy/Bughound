@@ -1,74 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {EmployeeService} from './services/employee.service';
+import { Component, OnInit } from '@angular/core';
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'bughound';
 
-  employee = {
-    name: '',
-    username: '',
-    password: '',
-    user_level: 0
-  };
+     constructor(public location: Location) {}
 
-  modeEdit = false;
+    ngOnInit(){
+    }
 
-  employees: any;
-
-  constructor(private employeeService: EmployeeService) {
-
-  }
-
-  ngOnInit() {
-    this.employeeService.listEmployees().subscribe(res => {
-      this.employees = res;
-    });
-  }
-
-  submit() {
-    this.employeeService.createEmployee(this.employee).subscribe(res => {
-      this.employee = {
-        name: '',
-        username: '',
-        password: '',
-        user_level: 0
-      };
-
-      this.employeeService.listEmployees().subscribe(res => {
-        this.employees = res;
-      });
-    });
-  }
-
-  editEmployee(employee) {
-    this.modeEdit = true;
-    this.employee = employee;
-  }
-
-
-  updateEmployee() {
-    this.employeeService.updateEmployee(this.employee).subscribe(res => {
-      this.employees = res ;
-      this.modeEdit = false;
-      this.employeeService.listEmployees().subscribe(res2 => {
-        this.employees = res2;
-      });
-    });
-  }
-
-  cancelEdit() {
-    this.modeEdit = false;
-    this.employee = {
-      name: '',
-      username: '',
-      password: '',
-      user_level: 0
-    };
-  }
+    isMap(path){
+      var titlee = this.location.prepareExternalUrl(this.location.path());
+      titlee = titlee.slice( 1 );
+      if(path == titlee){
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
 }
-
