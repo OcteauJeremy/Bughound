@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
+import { BugService } from '../services/bug.service';
+import { getChoiceFromValue } from '../bugs/bugs-utils';
+
 
 @Component({
   selector: 'app-home',
@@ -9,6 +12,15 @@ import * as Chartist from 'chartist';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+      params_page = {
+        page_size: 10,
+        page: 1
+    };
+    bugs = null;
+
+    getName = getChoiceFromValue;
+
     public emailChartType: ChartType;
     public emailChartData: any;
     public emailChartLegendItems: LegendItem[];
@@ -24,18 +36,18 @@ export class HomeComponent implements OnInit {
     public activityChartOptions: any;
     public activityChartResponsive: any[];
     public activityChartLegendItems: LegendItem[];
-  constructor() { }
+  constructor(private bugService: BugService) { }
 
   ngOnInit() {
+      this.loadBugs()
       this.emailChartType = ChartType.Pie;
       this.emailChartData = {
-        labels: ['62%', '32%', '6%'],
-        series: [62, 32, 6]
+        labels: ['62%', '32%'],
+        series: [62, 32]
       };
       this.emailChartLegendItems = [
-        { title: 'Open', imageClass: 'fa fa-circle text-info' },
-        { title: 'Bounce', imageClass: 'fa fa-circle text-danger' },
-        { title: 'Unsubscribe', imageClass: 'fa fa-circle text-warning' }
+        { title: 'Open', imageClass: 'fa fa-circle text-danger' },
+        { title: 'Close', imageClass: 'fa fa-circle text-info' },
       ];
 
       this.hoursChartType = ChartType.Line;
@@ -106,7 +118,14 @@ export class HomeComponent implements OnInit {
         { title: 'BMW 5 Series', imageClass: 'fa fa-circle text-danger' }
       ];
 
-
     }
+
+    loadBugs() {
+      this.bugService.listBugs(this.params_page).subscribe(res => {
+          this.bugs = res;
+      });
+  }
+
+
 
 }
