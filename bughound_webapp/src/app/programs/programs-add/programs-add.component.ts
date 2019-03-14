@@ -58,6 +58,10 @@ export class ProgramsAddComponent implements OnInit {
         this.program.versions.splice(idx, 1);
     }
 
+    deleteArea(idx) {
+        this.program.areas.splice(idx, 1);
+    }
+
     checkNumberInput(arrayRef) {
         let addInput = true;
         for (let elem of arrayRef) {
