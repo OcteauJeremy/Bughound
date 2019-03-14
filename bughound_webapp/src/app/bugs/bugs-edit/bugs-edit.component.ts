@@ -46,7 +46,7 @@ export class BugsEditComponent implements OnInit {
     selectedDate: NgbDateStruct;
 
 
-    bug : any = {
+    bug: any = {
         program: null,
         bug_version: null,
         report_type: 0,
@@ -65,6 +65,8 @@ export class BugsEditComponent implements OnInit {
         comments: ''
     };
 
+    user = null;
+
     disableUserReport = false;
     isDevelopper = true;
 
@@ -75,11 +77,22 @@ export class BugsEditComponent implements OnInit {
     ngOnInit() {
         const id = this.route.snapshot.paramMap.get('id');
         this.isDevelopper = this.as.isDevelopper() || this.as.isAdmin();
+        this.user = this.as.getUser();
 
         this.bugService.getBug(id).subscribe(res => {
             this.bug = res;
             this.syncBugCmp();
         });
+    }
+
+    disabledDevReport() {
+        if (this.as.isAdmin())
+            return false;
+
+        if (!this.user.id == this.bug.assigned_to.id)
+            return false;
+
+        return true;
     }
 
     syncBugCmp() {

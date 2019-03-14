@@ -8,9 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
-  selector: 'app-bugs-list',
-  templateUrl: './bugs-list.component.html',
-  styleUrls: ['./bugs-list.component.scss']
+    selector: 'app-bugs-list',
+    templateUrl: './bugs-list.component.html',
+    styleUrls: ['./bugs-list.component.scss']
 })
 export class BugsListComponent implements OnInit {
 
@@ -23,7 +23,8 @@ export class BugsListComponent implements OnInit {
     getName = getChoiceFromValue;
 
     constructor(private router: Router, private bugService: BugService, public dialog: MatDialog, private toastr: ToastrService,
-                private as: AuthenticationService) { }
+                private as: AuthenticationService) {
+    }
 
     ngOnInit() {
         this.loadBugs()
@@ -36,6 +37,9 @@ export class BugsListComponent implements OnInit {
     loadBugs() {
         this.bugService.listBugs(this.params_page).subscribe(res => {
             this.bugs = res;
+            // for (let bug of this.bugs.results) {
+            //     bug.checked = false;
+            // }
         });
     }
 
@@ -43,10 +47,25 @@ export class BugsListComponent implements OnInit {
         return this.as.isAdmin();
     }
 
-    assignBugs() {
+    isDevelopper() {
+        return this.as.isDevelopper();
+    }
 
+    isAdmin() {
+        return this.as.isAdmin();
+    }
+
+    checkedBugs() {
         for (let bug of this.bugs.results) {
-            console.log(bug.checked);
+            if (bug.checked) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    assignBugs() {
+        for (let bug of this.bugs.results) {
             if (bug.checked) {
                 bug['assigned_to'] = this.as.getUser();
                 this.bugService.updateBug(bug).subscribe(res => {
@@ -58,38 +77,39 @@ export class BugsListComponent implements OnInit {
     }
 
     openDialogDeleteBug(bug): void {
-         const dialogRef = this.dialog.open(DialogConfirmDeleteBug, {
-             width: '550px',
-             data: {bug: bug}
-         });
-        
-         dialogRef.afterClosed().subscribe(result => {
-             if (result) {
-                 this.bugService.deleteBug(bug).subscribe(res => {
-                     this.params_page = {
-                         page_size: 10,
-                         page: 1
-                     };
-                     this.loadBugs();
-                     this.toastr.success('Bug ' + result.name + ' deleted.');
-                 });
-             }
-         });
+        const dialogRef = this.dialog.open(DialogConfirmDeleteBug, {
+            width: '550px',
+            data: {bug: bug}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.bugService.deleteBug(bug).subscribe(res => {
+                    this.params_page = {
+                        page_size: 10,
+                        page: 1
+                    };
+                    this.loadBugs();
+                    this.toastr.success('Bug ' + result.name + ' deleted.');
+                });
+            }
+        });
     }
 }
 
- @Component({
-     selector: 'app-dialog-confirm-delete-bug',
-     templateUrl: 'dialog-confirm-delete-bug.html',
- })
- export class DialogConfirmDeleteBug {
+@Component({
+    selector: 'app-dialog-confirm-delete-bug',
+    templateUrl: 'dialog-confirm-delete-bug.html',
+})
+export class DialogConfirmDeleteBug {
 
-     constructor(
-         public dialogRef: MatDialogRef<DialogConfirmDeleteBug>,
-         @Inject(MAT_DIALOG_DATA) public data) {}
+    constructor(
+        public dialogRef: MatDialogRef<DialogConfirmDeleteBug>,
+        @Inject(MAT_DIALOG_DATA) public data) {
+    }
 
-     onNoClick(): void {
-         this.dialogRef.close();
-     }
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 
- }
+}

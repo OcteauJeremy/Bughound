@@ -12,3 +12,9 @@
   height: 40px;
   box-shadow: none;
 }
+
+.dp-input[disabled] {
+  background-color: #F5F5F5;
+  color: #888888;
+  cursor: not-allowed !important;
+}

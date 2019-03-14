@@ -47,8 +47,7 @@ class BugSerializer(serializers.ModelSerializer):
                 'version': version_validated
             })
 
-        instance = Bug(program=program, bug_version=version,
-                       reported_by=self.context['request'].user, **validated_data)
+        instance = Bug(program=program, reported_by=self.context['request'].user, bug_version=version, **validated_data)
         instance.save()
 
         return instance
@@ -57,6 +56,7 @@ class BugSerializer(serializers.ModelSerializer):
         program_validated = validated_data.pop('program')
         try:
             program = Program.objects.get(id=program_validated['id'])
+            instance.program = program
         except ObjectDoesNotExist:
             raise NotFound(detail={
                 'message': 'Program doesn\'t exist.',
@@ -66,25 +66,30 @@ class BugSerializer(serializers.ModelSerializer):
         version_validated = validated_data.pop('bug_version')
         try:
             version = Version.objects.get(id=version_validated['id'], program=program)
+            instance.version = version
         except ObjectDoesNotExist:
             raise NotFound(detail={
                 'message': 'Version doesn\'t exist.',
                 'version': version_validated
             })
 
-        if 'assigned_to' in validated_data:
-            assigned_to_validated = validated_data.pop('assigned_to')
+        validated_data.pop('reported_by')
+
+        # instance.update(**validated_data)
+        assigned_to_validated = validated_data.pop('assigned_to', None)
+        if assigned_to_validated is not None:
             try:
                 assigned_to_instance = User.objects.get(id=assigned_to_validated['id'])
+                instance.assigned_to = assigned_to_instance
             except ObjectDoesNotExist:
                 raise NotFound(detail={
                     'message': 'User doesn\'t exist.',
                     'user': assigned_to_validated
                 })
 
-        instance = Bug(program=program, assigned_to=assigned_to_instance, bug_version=version,
-                       reported_by=self.context['request'].user, **validated_data)
         instance.save()
+
+        instance = Bug.objects.update_or_create(id=instance.id, defaults=validated_data)
 
         return instance
 
