@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProgramService } from '../../services/program.service';
 import { DialogConfirmDeleteUser } from '../../users/users-list/users-list.component';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-programs-list',
@@ -19,7 +20,7 @@ export class ProgramsListComponent implements OnInit {
     programs = null;
 
     constructor(private router: Router, private programService: ProgramService, public dialog: MatDialog,
-                private toastr: ToastrService) {}
+                private toastr: ToastrService, private as: AuthenticationService) {}
 
     ngOnInit() {
         this.loadPrograms();
@@ -33,10 +34,22 @@ export class ProgramsListComponent implements OnInit {
         return program.versions.map(e => e.name).join(', ');
     }
 
+    getProgramArea(program) {
+        return program.areas.map(e => e.name).join(', ');
+    }
+
     loadPrograms() {
         this.programService.listPrograms(this.params_page).subscribe(res => {
             this.programs = res;
         })
+    }
+
+    canEdit() {
+        return this.as.isDevelopper() || this.as.isAdmin();
+    }
+
+    canDelete() {
+        return this.as.isAdmin();
     }
 
     openDialogDeleteProgram(prog): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -12,11 +13,6 @@ export const ROUTES: RouteInfo[] = [
     { path: '/dashboard/bugs', title: 'Bugs',  icon:'pe-7s-config', class: '' },
     { path: '/dashboard/users', title: 'Users',  icon:'pe-7s-user', class: '' },
     { path: '/dashboard/programs', title: 'Programs',  icon:'pe-7s-box2', class: '' },
-    { path: '/dashboard/user', title: 'List User',  icon:'pe-7s-user', class: '' },
-    { path: '/dashboard/table', title: 'Table List',  icon:'pe-7s-note2', class: '' },
-    { path: '/dashboard/typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
-    { path: '/dashboard/icons', title: 'Icons',  icon:'pe-7s-science', class: '' },
-    { path: '/dashboard/notifications', title: 'Notifications',  icon:'pe-7s-bell', class: '' },
 ];
 
 @Component({
@@ -26,10 +22,15 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(private as: AuthenticationService) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems = ROUTES.filter(menuItem => {
+        if (!this.as.isAdmin() && menuItem.title == 'Users') {
+            return false;
+        }
+        return true;
+    });
   }
 
   isMobileMenu() {

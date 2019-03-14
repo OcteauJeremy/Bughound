@@ -70,10 +70,18 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'id', 'first_name', 'last_name', 'is_staff', 'groups')
+        fields = ('username', 'email', 'id', 'first_name', 'last_name', 'is_superuser', 'groups')
         read_only_fields = ('id',)
         extra_kwargs = {
             'groups': {
                 'validators': []
             }
         }
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
+    
+    class Meta:
+        model = User
+        fields = '__all__'

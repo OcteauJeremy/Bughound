@@ -25,10 +25,7 @@ export class LoginHomeComponent implements OnInit {
         this.as.login(this.creditentials).subscribe(res => {
             this.toastr.success('Login successful');
             this.as.setToken(res.token);
-            this.as.setId(res.user.pk);
-            this.userService.getUser(res.user.pk).subscribe(res2 => {
-                this.as.setUser(res2);
-            });
+            this.as.setUser(res.user);
             this.router.navigate(['/dashboard']);
         }, error1 => {
             this.toastr.error('Wrong creditentials');

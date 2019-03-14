@@ -78,7 +78,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ('id', 'name', 'versions')
+        fields = ('id', 'name', 'versions', 'areas')
         extra_kwargs = {
             'name': {
                 'validators': []

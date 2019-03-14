@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProgramService } from '../../services/program.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-programs-edit',
@@ -12,7 +13,7 @@ export class ProgramsEditComponent implements OnInit {
 
     program = null;
 
-    constructor(private route: ActivatedRoute, private programService: ProgramService, private toastr: ToastrService) { }
+    constructor(private route: ActivatedRoute, private programService: ProgramService, private toastr: ToastrService, private as: AuthenticationService) { }
 
     ngOnInit() {
         const id = this.route.snapshot.paramMap.get('id');
@@ -21,6 +22,10 @@ export class ProgramsEditComponent implements OnInit {
             this.program = res;
             this.program.versions.push({name: ''});
         });
+    }
+
+    canDelete() {
+        return this.as.isDevelopper();
     }
 
     updateProgram() {
@@ -33,6 +38,7 @@ export class ProgramsEditComponent implements OnInit {
             this.toastr.success('Program updated.')
         });
     }
+
 
     deleteVersion(idx) {
         this.program.versions.splice(idx, 1);

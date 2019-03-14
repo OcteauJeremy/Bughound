@@ -53,6 +53,7 @@ AREA = (
 
 class Area(models.Model):
     name = models.CharField(max_length=255)
+    program = models.ForeignKey('programs.program', related_name='areas', on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-id']

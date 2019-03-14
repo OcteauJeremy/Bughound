@@ -18,6 +18,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   imports: [
@@ -39,7 +40,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
       AdminLayoutComponent,
       LoginLayoutComponent
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

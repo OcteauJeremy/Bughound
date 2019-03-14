@@ -46,12 +46,8 @@
     margin-left: 5px;
 }
 
-.row-table:hover  .buttons-container {
-    display: flex;
-}
-
 .buttons-container {
-    display: none;
+    display: flex;
 }
 
 .content.bottom-bar {
@@ -68,3 +64,9 @@
     text-align: right;
 }
 
+.navbar .navbar-nav > li > .email-account {
+    color: #9A9A9A;
+    padding: 10px 15px;
+    margin: 10px 3px;
+    position: relative;
+}

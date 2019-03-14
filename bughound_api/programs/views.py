@@ -1,3 +1,4 @@
+import rules
 from django.shortcuts import render
 from rest_framework import mixins, generics
 from rest_framework.pagination import PageNumberPagination
@@ -19,7 +20,7 @@ class ProgramDetail(mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
                     generics.GenericAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser)
+    permission_classes = (IsAuthenticated|IsAdminUser,)
     serializer_class = ProgramSerializer
 
     def get_queryset(self):

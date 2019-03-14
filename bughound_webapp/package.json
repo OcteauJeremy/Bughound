@@ -44,6 +44,7 @@
     "jquery": "3.3.1",
     "moment": "^2.24.0",
     "ng-select2": "^1.0.8",
+    "ngx-cookie-service": "^2.1.0",
     "ngx-toastr": "^9.1.2",
     "perfect-scrollbar": "^1.4.0",
     "rxjs": "6.4.0",

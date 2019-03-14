@@ -22,24 +22,29 @@
                             <th class="text-center">#</th>
                             <th class="text-center">Name</th>
                             <th class="text-center">Versions</th>
+                            <th class="text-center">Area</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let prog of programs?.results" class="row-table">
-                                <td class="text-center">{{prog.id}}</td>
-                                <td class="text-center">{{prog.name}}</td>
-                                <td class="text-center">{{getProgramVersion(prog)}}</td>
-                                <td class="actions-container-table">
-                                    <div class="buttons-container">
-                                        <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + prog.id)">
-                                            <fa-icon [icon]="['far', 'edit']" size="sm"></fa-icon>
-                                        </button>
-                                        <button class="btn btn-danger btn-fill" (click)="openDialogDeleteProgram(prog)">
-                                            <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr *ngFor="let prog of programs?.results" class="row-table">
+                            <td class="text-center">{{prog.id}}</td>
+                            <td class="text-center">{{prog.name}}</td>
+                            <td class="text-center">{{getProgramVersion(prog)}}</td>
+                            <td class="text-center">{{getProgramArea(prog)}}</td>
+
+                            <td class="actions-container-table">
+                                <div class="buttons-container">
+                                    <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + prog.id)"
+                                            *ngIf="canEdit()">
+                                        <fa-icon [icon]="['far', 'edit']" size="sm"></fa-icon>
+                                    </button>
+                                    <button class="btn btn-danger btn-fill" (click)="openDialogDeleteProgram(prog)"
+                                    *ngIf="canDelete()">
+                                        <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <div class="pagination-container">

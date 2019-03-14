@@ -13,11 +13,7 @@ export class AppComponent implements OnInit {
      constructor(public location: Location, public as: AuthenticationService, public userService: UserService) {}
 
     ngOnInit() {
-         if (this.as.isLogged()) {
-             this.userService.getUser(this.as.getId()).subscribe(res => {
-                 this.as.setUser(res);
-             })
-         }
+        this.as.retrieveCookie();
     }
 
     isMap(path){

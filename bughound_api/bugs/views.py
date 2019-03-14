@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from django.shortcuts import render
 from rest_framework import mixins, generics
+from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters import rest_framework as filters
@@ -46,6 +47,8 @@ class BugListView(mixins.ListModelMixin,
     permission_classes = (IsAuthenticated,)
     serializer_class = BugSerializer
     pagination_class = StandardResultsSetPagination
+    filter_backends = (SearchFilter,)
+    search_fields = ('summary', 'description', 'suggested_fix')
 
     def get_queryset(self):
         return Bug.objects.all()
