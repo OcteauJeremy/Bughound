@@ -59,10 +59,33 @@ export class BugsAddComponent implements OnInit {
         bug_obj.program = this.selectedProgram;
         bug_obj.bug_version = this.selectedVersion;
         bug_obj.reported_date = moment().format('YYYY-MM-DD');
+        if (bug_obj.summary == "" || bug_obj.summary == " ") {
+            this.toastr.error('Summary Needed.')
+        }
+        
         this.bugService.createBug(bug_obj).subscribe(res => {
             this.toastr.success('Bug created.')
             this.router.navigate(['/dashboard/bugs']);
         });
     }
 
+    resetBug() {
+        let bug_obj = {...this.bug};
+        this.bug.program = null;
+        this.bug.bug_version = null;
+        this.bug.report_type = 0;
+        this.bug.severity = 0;
+        this.bug.summary = '';
+        this.bug.reproducible = false;
+        this.bug.description = '';
+        this.bug.suggested_fix = '';
+        this.bug.reported_date = null;
+        this.toastr.success('Bug reset.')
+        //this.router.navigate(['dashboard/bugs/add']);
+    }
+
+    cancelBug() {
+        this.toastr.success('Operation cancel')
+        this.router.navigate(['dashboard/bugs']);
+    }
 }
