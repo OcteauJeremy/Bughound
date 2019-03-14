@@ -78,7 +78,7 @@ export class BugsEditComponent implements OnInit {
         const id = this.route.snapshot.paramMap.get('id');
         this.isDevelopper = this.as.isDevelopper() || this.as.isAdmin();
         this.user = this.as.getUser();
-
+        console.log(this.user);
         this.bugService.getBug(id).subscribe(res => {
             this.bug = res;
             this.syncBugCmp();
@@ -86,10 +86,14 @@ export class BugsEditComponent implements OnInit {
     }
 
     disabledDevReport() {
+        if (this.bug == null) {
+            return true;
+        }
+
         if (this.as.isAdmin())
             return false;
 
-        if (!this.user.id == this.bug.assigned_to.id)
+        if (this.bug.assigned_to != null && !this.user.id == this.bug.assigned_to.id)
             return false;
 
         return true;

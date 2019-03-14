@@ -4,11 +4,16 @@
   margin-top: 20px;
 
   .content {
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
 
 .buttons-container {
   display: flex;
+}
+
+.mat-form-field {
+  width: 100%;
 }
