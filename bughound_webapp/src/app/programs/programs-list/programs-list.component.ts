@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProgramService } from '../../services/program.service';
 import { DialogConfirmDeleteUser } from '../../users/users-list/users-list.component';
 import { AuthenticationService } from '../../services/authentication.service';
+import { debounceTime } from 'rxjs-compat/operator/debounceTime';
 
 @Component({
   selector: 'app-programs-list',
@@ -24,6 +25,7 @@ export class ProgramsListComponent implements OnInit {
 
     ngOnInit() {
         this.loadPrograms();
+
     }
 
     navigateToUrl(url) {

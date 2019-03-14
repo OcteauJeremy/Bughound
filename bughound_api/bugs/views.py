@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, generics
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
@@ -47,8 +48,10 @@ class BugListView(mixins.ListModelMixin,
     permission_classes = (IsAuthenticated,)
     serializer_class = BugSerializer
     pagination_class = StandardResultsSetPagination
-    filter_backends = (SearchFilter,)
-    search_fields = ('summary', 'description', 'suggested_fix')
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    search_fields = ('summary', 'description', 'suggested_fix', 'assigned_to__username', 'assigned_to__first_name',
+                     'assigned_to__last_name')
+    filterset_fields = ('reproducible', 'program__id', 'bug_version__id', 'status', 'severity')
 
     def get_queryset(self):
         return Bug.objects.all()

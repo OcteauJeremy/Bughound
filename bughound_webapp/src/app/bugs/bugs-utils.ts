@@ -59,5 +59,9 @@ export function getChoiceFromValue(value, name) {
         array = SEVERITIES;
     }
 
+    if (name === 'STATUS') {
+        array = STATUS;
+    }
+
     return array.find(obj => obj.value === value).name;
 }
