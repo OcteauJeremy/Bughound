@@ -1,0 +1,7 @@
+<h1 mat-dialog-title class="text-center">Delete {{data.bug.name}}?</h1>
+<div mat-dialog-actions>
+    <div class="actions-container-dialog">
+        <button class="btn btn-info" (click)="onNoClick()">Cancel</button>
+        <button [mat-dialog-close]="data.bug" class="btn btn-fill btn-danger" cdkFocusInitial>Delete</button>
+    </div>
+</div>
