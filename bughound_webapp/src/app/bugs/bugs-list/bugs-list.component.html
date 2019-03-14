@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="content">
-            <button class="btn btn-primary btn-fill" (click)="assignBugs()" >Assign bugs</button>
+            <button *ngIf="isDevelopper()" class="btn btn-primary btn-fill" [disabled]="checkedBugs()" (click)="assignBugs()" >Assign bugs</button>
           <button class="btn btn-info btn-fill" (click)="navigateToUrl('add')">Report a bug</button>
         </div>
       </div>
@@ -24,6 +24,7 @@
                     <th class="text-center">#</th>
                     <th class="text-center">Summary</th>
                     <th class="text-center">Program - Version</th>
+                    <th *ngIf="isDevelopper() || isAdmin()">Assigned to</th>
                     <th class="text-center">Report type</th>
                     <th class="text-center">Severity</th>
                     <th class="text-center">Reported Date</th>
@@ -33,14 +34,15 @@
             <tbody>
                 <tr *ngFor="let bug of bugs?.results">
                     <td class="text-center">
-                        <div class="checkbox">
-                            <input type="checkbox" [(ngModel)]="bug.checked" id="checkbox2" data-toggle="checkbox">
-                            <label for="checkbox2"></label>
+                        <div class="checkbox" *ngIf="bug.assigned_to == null">
+                            <input type="checkbox" [(ngModel)]="bug.checked" [id]="'checkbox' + bug.id" data-toggle="checkbox">
+                            <label [for]="'checkbox' + bug.id"></label>
                         </div>
                     </td>
                     <td class="text-center">{{bug.id}}</td>
                     <td class="text-center">{{(bug.summary.length > 25) ? (bug.summary | slice:0:25) + '...' : bug.summary }}</td>
                     <td class="text-center">{{bug.program.name}} - {{bug.bug_version.name}}</td>
+                    <th *ngIf="isDevelopper() || isAdmin()">{{bug.assigned_to.username}}</th>
                     <td class="text-center">{{getName(bug.report_type, 'REPORT_TYPES')}}</td>
                     <td class="text-center">{{getName(bug.severity, 'SEVERITIES')}}</td>
                     <td class="text-center">{{bug.reported_date}}</td>

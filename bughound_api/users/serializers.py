@@ -50,6 +50,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
+    id = serializers.IntegerField()
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username')
