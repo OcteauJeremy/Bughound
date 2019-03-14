@@ -1,5 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 .clickable {
     cursor: pointer;
 }
+
+.form-group.select-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+    height: 40px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.actions-container-table {
+    display: flex;
+    justify-content: center;
+}
+
+.actions-container-table button {
+    padding: 2px 5px;
+    height: fit-content;
+    margin-right: 5px;
+}
+
+.actions-container-table:nth-last-of-type(button) {
+    margin-right: 0;
+}
+
+.actions-container-dialog {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.actions-container-dialog button {
+    margin-left: 5px;
+}
+
+.row-table:hover  .buttons-container {
+    display: flex;
+}
+
+.buttons-container {
+    display: none;
+}
+
+.content.bottom-bar {
+    display: flex;
+    justify-content: center;
+}
+
+
+.toolbar {
+    margin-top: 20px;
+}
+
+.toolbar .content {
+    text-align: right;
+}
+

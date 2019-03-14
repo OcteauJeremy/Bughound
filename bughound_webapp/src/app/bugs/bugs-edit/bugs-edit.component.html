@@ -1,0 +1,212 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Reported by {{bug?.reported_by?.first_name}} {{bug?.reported_by?.last_name}}</h4>
+                </div>
+                <div class="content">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group select-form">
+                                    <label>Program</label>
+                                    <ng-select [items]="programs"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedProgram"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               [disabled]="disableUserReport"
+                                               (change)="programChanged($event)"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Release</label>
+                                    <ng-select [items]="selectedProgram?.versions"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedVersion"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [disabled]="disableUserReport"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Report Type</label>
+                                    <ng-select [items]="report_types"
+                                               bindLabel="name"
+                                               bindValue="value"
+                                               [(ngModel)]="bug.report_type"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [disabled]="disableUserReport"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Severity</label>
+                                    <ng-select [items]="severities"
+                                               bindLabel="name"
+                                               bindValue="value"
+                                               [(ngModel)]="bug.severity"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [disabled]="disableUserReport"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Problem summary</label>
+                                    <input type="text" class="form-control" placeholder="Summary"
+                                           [disabled]="disableUserReport"
+                                           [(ngModel)]="bug.summary" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Can you reproduce this problem?</label>
+                                    <div class="checkbox">
+                                        <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox"
+                                               [disabled]="disableUserReport"
+                                               [(ngModel)]="bug.reproducible" [ngModelOptions]="{standalone: true}">
+                                        <label for="checkbox1"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Problem and how to reproduce it</label>
+                                    <textarea class="form-control" rows="4" [disabled]="disableUserReport"
+                                              [(ngModel)]="bug.description" [ngModelOptions]="{standalone: true}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Suggested Fix</label>
+                                    <textarea class="form-control" rows="4" [disabled]="disableUserReport"
+                                              [(ngModel)]="bug.suggested_fix" [ngModelOptions]="{standalone: true}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="isDevelopper">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Developer Report</h4>
+                </div>
+                <div class="content">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group select-form">
+                                    <label>Functionnal Area</label>
+                                    <ng-select [items]="areas"
+                                               bindLabel="name"
+                                               bindValue="value"
+                                               [(ngModel)]="selectedArea"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Comments</label>
+                                    <textarea class="form-control" rows="4"
+                                              [(ngModel)]="dev.comments" [ngModelOptions]="{standalone: true}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <ng-select [items]="status"
+                                               bindValue="value"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedStatus"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Priority</label>
+                                    <ng-select [items]="priorities"
+                                               bindValue="value"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedPriorities"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Resolution</label>
+                                    <ng-select [items]="resolutions"
+                                               bindValue="value"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedResolution"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Solved Date</label>
+                                    <ngb-datepicker #dp [(ngModel)]="selectedDate"></ngb-datepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="content bottom-bar">
+                    <button class="btn btn-info btn-fill" (click)="createBug()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

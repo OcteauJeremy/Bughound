@@ -4,10 +4,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="content">
-          <button class="btn btn-primary" (click)="navigateToUrl('add')">Report a bug</button>
+          <button class="btn btn-info btn-fill" (click)="navigateToUrl('add')">Report a bug</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="header">
@@ -16,14 +18,32 @@
         <div class="content table-responsive table-full-width">
           <table class="table table-hover table-striped">
             <thead>
-            <tr>
-              <!--<th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>-->
-            </tr>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Summary</th>
+                    <th class="text-center">Program - Version</th>
+                    <th class="text-center">Report type</th>
+                    <th class="text-center">Severity</th>
+                    <th class="text-center">Reported Date</th>
+                    <th class="text-center">Detail</th>
+                </tr>
             </thead>
             <tbody>
-            <!--<tr *ngFor="let row of tableData1.dataRows">-->
-              <!--<td *ngFor="let cell of row">{{cell}}</td>-->
-            <!--</tr>-->
+                <tr *ngFor="let bug of bugs?.results">
+                    <td class="text-center">{{bug.id}}</td>
+                    <td class="text-center">{{(bug.summary.length > 25) ? (bug.summary | slice:0:25) + '...' : bug.summary }}</td>
+                    <td class="text-center">{{bug.program.name}} - {{bug.bug_version.name}}</td>
+                    <td class="text-center">{{getName(bug.report_type, 'REPORT_TYPES')}}</td>
+                    <td class="text-center">{{getName(bug.severity, 'SEVERITIES')}}</td>
+                    <td class="text-center">{{bug.reported_date}}</td>
+                    <td class="actions-container-table">
+                        <div class="buttons-container">
+                            <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + bug.id)">
+                                <fa-icon [icon]="['far', 'eye']" size="sm"></fa-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
           </table>
 

@@ -51,23 +51,6 @@ AREA = (
 )
 
 
-class Program(models.Model):
-    name = models.CharField(max_length=255)
-
-    class Meta:
-        ordering = ['-id']
-        db_table = 'programs'
-
-
-class Version(models.Model):
-    name = models.CharField(max_length=255)
-    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='versions')
-
-    class Meta:
-        ordering = ['-id']
-        db_table = 'program_versions'
-
-
 class Area(models.Model):
     name = models.CharField(max_length=255)
 
@@ -77,7 +60,8 @@ class Area(models.Model):
 
 
 class Bug(models.Model):
-    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    program = models.ForeignKey('programs.program', on_delete=models.CASCADE)
+    bug_version = models.ForeignKey('programs.version', on_delete=models.CASCADE, related_name='reported_bugs')
     report_type = models.IntegerField(
         choices=REPORT_TYPE,
         default=0,
@@ -90,12 +74,12 @@ class Bug(models.Model):
     reproducible = models.BooleanField(default=False)
     description = models.TextField()
     suggested_fix = models.TextField()
-    report_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reported_bugs')
+    reported_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reported_bugs')
     reported_date = models.DateField()
 
-    functional_area = models.ForeignKey(Area, on_delete=models.CASCADE)
-    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_bugs')
-    comments = models.TextField()
+    functional_area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True, default=None)
+    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_bugs', null=True, default=None)
+    comments = models.TextField(default='')
     status = models.IntegerField(
         choices=STATUS,
         default=0
@@ -108,8 +92,9 @@ class Bug(models.Model):
         choices=RESOLUTION,
         default=0
     )
-    resolution_version = models.ForeignKey(Version, on_delete=models.CASCADE)
-    solved_date = models.DateField()
+    resolution_version = models.ForeignKey('programs.version', on_delete=models.CASCADE, related_name='solved_bugs',
+                                           null=True, default=None)
+    solved_date = models.DateField(null=True, default=None)
 
     class Meta:
         ordering = ['-id']
@@ -123,14 +108,3 @@ class Attachment(models.Model):
     class Meta:
         ordering = ['-id']
         db_table = 'attachments'
-
-
-class Employee(models.Model):
-    name = models.CharField(max_length=255)
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    user_level = models.IntegerField()
-
-    class Meta:
-        ordering = ['-id']
-        db_table = 'employees'

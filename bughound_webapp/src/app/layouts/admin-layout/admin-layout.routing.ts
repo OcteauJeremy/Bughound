@@ -11,6 +11,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: '',               component: HomeComponent },
     { path: 'bugs',           loadChildren: '../../bugs/bugs.module#BugsModule'},
     { path: 'users',          loadChildren: '../../users/users.module#UsersModule'},
+    { path: 'programs',          loadChildren: '../../programs/programs.module#ProgramsModule'},
     { path: 'user',           component: UserComponent },
     { path: 'table',          component: TablesComponent },
     { path: 'typography',     component: TypographyComponent },

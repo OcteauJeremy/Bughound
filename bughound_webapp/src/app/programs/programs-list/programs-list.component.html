@@ -1,0 +1,56 @@
+<div class="main-content">
+
+    <div class="row toolbar">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="content">
+                    <button class="btn btn-info btn-fill" (click)="navigateToUrl('add')">Add a new program</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Programs</h4>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Versions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let prog of programs?.results" class="row-table">
+                                <td class="text-center">{{prog.id}}</td>
+                                <td class="text-center">{{prog.name}}</td>
+                                <td class="text-center">{{getProgramVersion(prog)}}</td>
+                                <td class="actions-container-table">
+                                    <div class="buttons-container">
+                                        <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + prog.id)">
+                                            <fa-icon [icon]="['far', 'edit']" size="sm"></fa-icon>
+                                        </button>
+                                        <button class="btn btn-danger btn-fill" (click)="openDialogDeleteProgram(prog)">
+                                            <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination-container">
+                        <ngb-pagination
+                                [(page)]="params_page.page" (pageChange)="params_page.page = $event;loadPrograms()"
+                                [pageSize]="params_page.page_size"
+                                [collectionSize]="programs?.count"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

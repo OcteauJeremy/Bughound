@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +10,14 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 })
 export class AppComponent implements OnInit {
 
-     constructor(public location: Location) {}
+     constructor(public location: Location, public as: AuthenticationService, public userService: UserService) {}
 
-    ngOnInit(){
+    ngOnInit() {
+         if (this.as.isLogged()) {
+             this.userService.getUser(this.as.getId()).subscribe(res => {
+                 this.as.setUser(res);
+             })
+         }
     }
 
     isMap(path){

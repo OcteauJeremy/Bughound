@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login-home',
@@ -15,7 +16,7 @@ export class LoginHomeComponent implements OnInit {
         password: 'password'
     };
 
-    constructor(private as: AuthenticationService, private router: Router, private toastr: ToastrService) { }
+    constructor(private as: AuthenticationService, private router: Router, private toastr: ToastrService, private userService: UserService) { }
 
     ngOnInit() {
     }
@@ -24,6 +25,10 @@ export class LoginHomeComponent implements OnInit {
         this.as.login(this.creditentials).subscribe(res => {
             this.toastr.success('Login successful');
             this.as.setToken(res.token);
+            this.as.setId(res.user.pk);
+            this.userService.getUser(res.user.pk).subscribe(res2 => {
+                this.as.setUser(res2);
+            });
             this.router.navigate(['/dashboard']);
         }, error1 => {
             this.toastr.error('Wrong creditentials');

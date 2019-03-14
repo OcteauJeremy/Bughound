@@ -10,14 +10,19 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-import { LoginHomeComponent } from './login-home/login-home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelect2Module } from 'ng-select2';
+import { faEdit, faEye, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { BrowserModule } from '@angular/platform-browser';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
       BrowserAnimationsModule,
+      BrowserModule,
       FormsModule,
       RouterModule,
       NavbarModule,
@@ -25,7 +30,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       SidebarModule,
       AppRoutingModule,
       HttpClientModule,
-      ToastrModule.forRoot()
+      ToastrModule.forRoot(),
+      NgSelectModule,
+      FontAwesomeModule
   ],
   declarations: [
       AppComponent,
@@ -35,4 +42,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor() {
+        library.add(faEdit, faTrashAlt, faEye);
+    }
+}

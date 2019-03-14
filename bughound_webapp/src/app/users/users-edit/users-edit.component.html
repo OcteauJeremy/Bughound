@@ -1,0 +1,93 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{user?.id}} - {{user?.first_name}} {{user?.last_name}}</h4>
+                </div>
+                <div class="content">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" placeholder="First Name"
+                                           [ngModel]="user?.first_name" (ngModelChange)="user.first_name = $event"
+                                           [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name"
+                                           [ngModel]="user?.last_name" (ngModelChange)="user.last_name = $event"
+                                           [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" placeholder="Username"
+                                           [ngModel]="user?.username" (ngModelChange)="user.username = $event"
+                                           [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" placeholder="Email"
+                                           [ngModel]="user?.email" (ngModelChange)="user.email = $event"
+                                           [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-4">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label>Password</label>-->
+                                    <!--<input type="password" class="form-control" placeholder="Password"-->
+                                           <!--[(ngModel)]="user?.password1" [ngModelOptions]="{standalone: true}">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-4">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label>Confirm Password</label>-->
+                                    <!--<input type="password" class="form-control" placeholder="Password"-->
+                                           <!--[(ngModel)]="user?.password2" [ngModelOptions]="{standalone: true}">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group select-form">
+                                    <label>Role</label>
+                                    <ng-select [items]="groups"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedGroup"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="content bottom-bar">
+                    <button class="btn btn-info btn-fill" (click)="updateUser()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

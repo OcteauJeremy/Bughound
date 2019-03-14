@@ -21,7 +21,7 @@ export class ManagerService {
 
 
     if (token) {
-      headers = headers.append('x-access-token', token);
+      headers = headers.append('Authorization', 'JWT ' + token);
     }
     return headers;
   }
@@ -49,10 +49,12 @@ export class ManagerService {
     });
   }
 
-  post(url, body) {
+  post(url, body, header = true) {
     let headers = new HttpHeaders();
 
-    headers = ManagerService.generateHeadersAuth(headers);
+    if (header) {
+        headers = ManagerService.generateHeadersAuth(headers);
+    }
 
     return this.http.post<any>(this.baseUrl + url, body, {
       headers: headers

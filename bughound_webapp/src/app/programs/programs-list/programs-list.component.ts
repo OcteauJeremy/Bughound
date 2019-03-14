@@ -1,0 +1,78 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ProgramService } from '../../services/program.service';
+import { DialogConfirmDeleteUser } from '../../users/users-list/users-list.component';
+
+@Component({
+  selector: 'app-programs-list',
+  templateUrl: './programs-list.component.html',
+  styleUrls: ['./programs-list.component.scss']
+})
+export class ProgramsListComponent implements OnInit {
+
+    params_page = {
+        page_size: 10,
+        page: 1
+    };
+    programs = null;
+
+    constructor(private router: Router, private programService: ProgramService, public dialog: MatDialog,
+                private toastr: ToastrService) {}
+
+    ngOnInit() {
+        this.loadPrograms();
+    }
+
+    navigateToUrl(url) {
+        this.router.navigate(['/dashboard/programs/' + url]);
+    }
+
+    getProgramVersion(program) {
+        return program.versions.map(e => e.name).join(', ');
+    }
+
+    loadPrograms() {
+        this.programService.listPrograms(this.params_page).subscribe(res => {
+            this.programs = res;
+        })
+    }
+
+    openDialogDeleteProgram(prog): void {
+        const dialogRef = this.dialog.open(DialogConfirmDeleteProgram, {
+            width: '550px',
+            data: {prog: prog}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.programService.deleteProgram(prog).subscribe(res => {
+                    this.params_page = {
+                        page_size: 10,
+                        page: 1
+                    };
+                    this.loadPrograms();
+                    this.toastr.success('Program ' + result.name + ' deleted.');
+                });
+            }
+        });
+    }
+
+}
+
+@Component({
+    selector: 'app-dialog-confirm-delete-program',
+    templateUrl: 'dialog-confirm-delete-program.html',
+})
+export class DialogConfirmDeleteProgram {
+
+    constructor(
+        public dialogRef: MatDialogRef<DialogConfirmDeleteProgram>,
+        @Inject(MAT_DIALOG_DATA) public data) {}
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
+}

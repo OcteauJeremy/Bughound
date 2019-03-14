@@ -1,3 +1,61 @@
-<p>
-  users-list works!
-</p>
+<div class="main-content">
+
+  <div class="row toolbar">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="content ">
+          <button class="btn btn-info btn-fill" (click)="navigateToUrl('add')">Add a new user</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title">Users</h4>
+        </div>
+        <div class="content table-responsive table-full-width">
+            <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">First Name</th>
+                <th class="text-center">Last Name</th>
+                <th class="text-center">Username</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Role</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users?.results" class="row-table">
+                    <td class="text-center">{{user.id}}</td>
+                    <td class="text-center">{{user.first_name}}</td>
+                    <td class="text-center">{{user.last_name}}</td>
+                    <td class="text-center">{{user.username}}</td>
+                    <td class="text-center">{{user.email}}</td>
+                    <td class="text-center">{{getUserRole(user)}}</td>
+                    <td class="actions-container-table">
+                        <div class="buttons-container">
+                            <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + user.id)">
+                                <fa-icon [icon]="['far', 'edit']" size="sm"></fa-icon>
+                            </button>
+                            <button class="btn btn-danger btn-fill" (click)="openDialogDeleteUser(user)">
+                                <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+            <div class="pagination-container">
+                <ngb-pagination
+                        [(page)]="params_page.page" (pageChange)="params_page.page = $event;loadUsers()"
+                        [pageSize]="params_page.page_size"
+                        [collectionSize]="users?.count"></ngb-pagination>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
