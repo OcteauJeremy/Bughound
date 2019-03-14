@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { REPORT_TYPES, SEVERITIES } from '../bugs-utils';
+import { UploadFile } from 'ngx-uploader';
 
 @Component({
   selector: 'app-bugs-add',
@@ -20,6 +21,7 @@ export class BugsAddComponent implements OnInit {
     report_types = REPORT_TYPES;
     severities = SEVERITIES;
 
+    files: UploadFile[] = [];
 
     bug = {
         program: null,

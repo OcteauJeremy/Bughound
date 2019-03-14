@@ -13,6 +13,7 @@ import { BugsEditComponent } from './bugs-edit/bugs-edit.component';
 import { BugsListComponent } from './bugs-list/bugs-list.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   declarations: [BugsListComponent, BugsAddComponent, BugsEditComponent, DialogConfirmDeleteBug],
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       OwlDateTimeModule,
       OwlNativeDateTimeModule,
       NgbModule,
-      MomentModule
+      MomentModule,
+      NgxUploaderModule
   ],
 
    entryComponents: [DialogConfirmDeleteBug],

@@ -62,9 +62,20 @@
                         </div>
                     </div>
                     <div class="actions-container col-md-4">
-                        <button *ngIf="isDevelopper()" class="btn btn-primary btn-fill" [disabled]="checkedBugs()"
+                        <div class="dropdown">
+                            <button class="btn btn-filled btn-warning dropdown-toggle" type="button" data-toggle="dropdown">
+                                Export
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="exportResults('CSV')">CSV</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="exportResults('XML')">XML</a></li>
+                                </ul>
+                            </button>
+
+                        </div>
+                        <button *ngIf="isDevelopper()" class="btn btn-primary btn-fill plain-btn" [disabled]="checkedBugs()"
                                 (click)="assignBugs()">Assign bugs</button>
-                        <button class="btn btn-info btn-fill" (click)="navigateToUrl('add')">Report a bug</button>
+                        <button class="btn btn-info btn-fill plain-btn" (click)="navigateToUrl('add')">Report a bug</button>
                     </div>
                 </div>
             </div>

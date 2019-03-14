@@ -71,7 +71,7 @@ export class BugsEditComponent implements OnInit {
     isDevelopper = true;
 
     constructor(private programService: ProgramService, private bugService: BugService, private toastr: ToastrService,
-                private route: ActivatedRoute, private as: AuthenticationService) {
+                private route: ActivatedRoute, private as: AuthenticationService, private router: Router) {
     }
 
     ngOnInit() {
@@ -116,7 +116,9 @@ export class BugsEditComponent implements OnInit {
     updateBug() {
         this.bugService.updateBug(this.bug).subscribe(res => {
             this.bug = res;
-            this.syncBugCmp()
+            this.syncBugCmp();
+            this.toastr.success('Bug updated.');
+            this.router.navigate(['/dashboard/bugs'])
         });
     }
 

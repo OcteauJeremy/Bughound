@@ -1,3 +1,7 @@
+import csv
+import datetime
+
+from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -5,6 +9,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, generics
+from rest_framework.decorators import api_view
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -73,3 +78,31 @@ class AreaListView(mixins.ListModelMixin,
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+
+@api_view(['GET'])
+def export_results(request):
+    type = request.query_params.pop('type')
+
+    queryset = Bug.objects.filter(**request.query_params)
+
+    d = datetime.datetime.today()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename={0}_{1}.csv'.format('list_bugs', d.strftime('%d-%m-%Y'))
+    writer = csv.writer(response)
+
+    writer.writerow(['program', 'program version' 'report type', 'severity', 'summary', 'reproducible',
+                     'description', 'suggested_fix', 'reported_by', 'reported_date', 'functionnal_area', 'assigned_to', 'comments'
+                     'status', 'priority', 'resolution', 'resolution version'])
+    for obj in queryset:
+        row = [obj.email, obj.first_name, obj.last_name,
+               obj.country.name, obj.profile.vip]
+        last_sub = obj.subscriptions_history.first()
+        if last_sub is not None:
+            row += [last_sub.start, last_sub.end, '{0} {1}'.format(last_sub.duration, last_sub.type),
+                    last_sub.price, last_sub.renew]
+        else:
+            row += ['', '', '', '', '']
+
+        row.append(obj.profile.device)
+        writer.writerow(row)
