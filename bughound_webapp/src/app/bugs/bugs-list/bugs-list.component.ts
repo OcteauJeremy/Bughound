@@ -58,38 +58,38 @@ export class BugsListComponent implements OnInit {
     }
 
     openDialogDeleteBug(bug): void {
-        // const dialogRef = this.dialog.open(DialogConfirmDeleteBug, {
-        //     width: '550px',
-        //     data: {bug: bug}
-        // });
-        //
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         this.bugService.deleteBug(bug).subscribe(res => {
-        //             this.params_page = {
-        //                 page_size: 10,
-        //                 page: 1
-        //             };
-        //             this.loadBugs();
-        //             this.toastr.success('Bug ' + result.name + ' deleted.');
-        //         });
-        //     }
-        // });
+         const dialogRef = this.dialog.open(DialogConfirmDeleteBug, {
+             width: '550px',
+             data: {bug: bug}
+         });
+        
+         dialogRef.afterClosed().subscribe(result => {
+             if (result) {
+                 this.bugService.deleteBug(bug).subscribe(res => {
+                     this.params_page = {
+                         page_size: 10,
+                         page: 1
+                     };
+                     this.loadBugs();
+                     this.toastr.success('Bug ' + result.name + ' deleted.');
+                 });
+             }
+         });
     }
 }
-//
-// @Component({
-//     selector: 'app-dialog-confirm-delete-bug',
-//     templateUrl: 'dialog-confirm-delete-bug.html',
-// })
-// export class DialogConfirmDeleteBug {
-//
-//     constructor(
-//         public dialogRef: MatDialogRef<DialogConfirmDeleteBug>,
-//         @Inject(MAT_DIALOG_DATA) public data) {}
-//
-//     onNoClick(): void {
-//         this.dialogRef.close();
-//     }
-//
-// }
+
+ @Component({
+     selector: 'app-dialog-confirm-delete-bug',
+     templateUrl: 'dialog-confirm-delete-bug.html',
+ })
+ export class DialogConfirmDeleteBug {
+
+     constructor(
+         public dialogRef: MatDialogRef<DialogConfirmDeleteBug>,
+         @Inject(MAT_DIALOG_DATA) public data) {}
+
+     onNoClick(): void {
+         this.dialogRef.close();
+     }
+
+ }
