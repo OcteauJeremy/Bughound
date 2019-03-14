@@ -41,6 +41,9 @@
                             <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + bug.id)">
                                 <fa-icon [icon]="['far', 'eye']" size="sm"></fa-icon>
                             </button>
+                            <button class="btn btn-danger btn-fill" (click)="openDialogDeleteBug(bug)">
+                              <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
+                          </button>
                         </div>
                     </td>
                 </tr>
