@@ -33,6 +33,11 @@ export class ProgramsAddComponent implements OnInit {
         })
     }
 
+    cancelProgram() {
+        this.toastr.success('Program cancel.');
+        this.router.navigate(['/dashboard/programs'])
+    }
+
     deleteVersion(idx) {
         this.program.versions.splice(idx, 1);
     }
