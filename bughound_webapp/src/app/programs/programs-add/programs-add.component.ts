@@ -26,6 +26,10 @@ export class ProgramsAddComponent implements OnInit {
     createProgram() {
         let program_obj = {...this.program}
 
+        if (program_obj.versions.filter(v => v.name == '')) {
+            this.toastr.error('Missing version.');
+            return
+        }
         program_obj.versions = program_obj.versions.filter(v => v.name != '');
         this.programService.createProgram(program_obj).subscribe(res => {
             this.toastr.success('Program created.');
