@@ -37,12 +37,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let title of program?.versions;index as idx" class="row-table">
+                            <tr *ngFor="let version of program?.versions;index as idx" class="row-table">
                                 <td class="text-center">
                                     <div class="form-group">
-                                        <label>Version {{idx}}</label>
+                                        <label>Version {{idx + 1}}</label>
                                         <input type="text" class="form-control" placeholder="Version"
-                                               [ngModel]="title?.name" (ngModelChange)="title.name = $event;checkNumberInput()"
+                                               [ngModel]="version?.name" (ngModelChange)="version.name = $event;checkNumberInput(program.versions)"
                                                [ngModelOptions]="{standalone: true}">
                                     </div>
 
@@ -66,7 +66,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Area</h4>
+                    <h4 class="title">Areas</h4>
                 </div>
                 <div class="content">
                     <div class="content table-responsive table-full-width">
@@ -78,12 +78,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let title of program?.versions;index as idx" class="row-table">
+                            <tr *ngFor="let area of program?.areas;index as idx" class="row-table">
                                 <td class="text-center">
                                     <div class="form-group">
-                                        <label>Area {{idx}}</label>
+                                        <label>Area {{idx + 1}}</label>
                                         <input type="text" class="form-control" placeholder="Area"
-                                                [ngModel]="title?.name" (ngModelChange)="title.name = $event;checkNumberInput()"
+                                                [ngModel]="area?.name" (ngModelChange)="area.name = $event;checkNumberInput(program.areas)"
                                                 [ngModelOptions]="{standalone: true}">
                                     </div>
     

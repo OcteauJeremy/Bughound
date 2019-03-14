@@ -15,6 +15,9 @@ export class ProgramsAddComponent implements OnInit {
         name: '',
         versions: [
             {name: ''}
+        ],
+        areas: [
+            {name: ''}
         ]
     };
 
@@ -24,12 +27,21 @@ export class ProgramsAddComponent implements OnInit {
     }
 
     createProgram() {
-        let program_obj = {...this.program}
+        let program_obj = {...this.program};
 
-        if (program_obj.versions.filter(v => v.name == '')) {
+        console.log(this.program);
+
+        if (program_obj.versions.every(v => v.name == '')) {
             this.toastr.error('Missing version.');
             return
         }
+
+        if (program_obj.areas.every(v => v.name == '')) {
+            this.toastr.error('Missing areas.');
+            return
+        }
+
+        program_obj.areas = program_obj.areas.filter(v => v.name != '');
         program_obj.versions = program_obj.versions.filter(v => v.name != '');
         this.programService.createProgram(program_obj).subscribe(res => {
             this.toastr.success('Program created.');
@@ -46,16 +58,16 @@ export class ProgramsAddComponent implements OnInit {
         this.program.versions.splice(idx, 1);
     }
 
-    checkNumberInput() {
+    checkNumberInput(arrayRef) {
         let addInput = true;
-        for (let version of this.program.versions) {
-            if (version.name == '') {
+        for (let elem of arrayRef) {
+            if (elem.name == '') {
                 addInput = false;
             }
         }
 
         if (addInput) {
-            this.program.versions.push({name: ''});
+            arrayRef.push({name: ''});
         }
 
     }

@@ -25,7 +25,7 @@ export class ProgramsEditComponent implements OnInit {
     }
 
     canDelete() {
-        return this.as.isDevelopper();
+        return this.as.isAdmin();
     }
 
     updateProgram() {

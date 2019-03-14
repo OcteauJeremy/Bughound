@@ -75,13 +75,16 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'groups': {
                 'validators': []
+            },
+            'username': {
+                'validators': []
             }
         }
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
-    
+
     class Meta:
         model = User
         fields = '__all__'

@@ -37,19 +37,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let title of program?.versions;index as idx" class="row-table">
+                            <tr *ngFor="let version of program?.versions;index as idx" class="row-table">
                                 <td class="text-center">
                                     <div class="form-group">
                                         <label>Version {{idx}}</label>
                                         <input type="text" class="form-control" placeholder="Version"
-                                               [ngModel]="title?.name" (ngModelChange)="title.name = $event;checkNumberInput()"
+                                               [ngModel]="version?.name" (ngModelChange)="version.name = $event;checkNumberInput()"
                                                [ngModelOptions]="{standalone: true}">
                                     </div>
 
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-danger btn-fill" (click)="deleteVersion(idx)"
-                                            [disabled]="idx == 0 && !canDelete()">
+                                            [disabled]="idx == 0 || !canDelete()">
                                         <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
                                     </button>
                                 </td>
@@ -66,31 +66,31 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Area</h4>
+                    <h4 class="title">Areas</h4>
                 </div>
                 <div class="content">
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th class="text-center">Title</th>
+                                <th class="text-center">Name</th>
                                 <th class="text-center">Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let title of program?.versions;index as idx" class="row-table">
+                            <tr *ngFor="let area of program?.areas;index as idx" class="row-table">
                                 <td class="text-center">
                                     <div class="form-group">
                                         <label>Area {{idx}}</label>
                                         <input type="text" class="form-control" placeholder="Area"
-                                               [ngModel]="title?.name" (ngModelChange)="title.name = $event;checkNumberInput()"
+                                               [ngModel]="area?.name" (ngModelChange)="area.name = $event;checkNumberInput()"
                                                [ngModelOptions]="{standalone: true}">
                                     </div>
 
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-danger btn-fill" (click)="deleteVersion(idx)"
-                                            [disabled]="idx == 0">
+                                            [disabled]="idx == 0 || !canDelete()">
                                         <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
                                     </button>
                                 </td>

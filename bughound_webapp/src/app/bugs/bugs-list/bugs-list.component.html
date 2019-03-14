@@ -4,6 +4,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="content">
+            <button class="btn btn-primary btn-fill" (click)="assignBugs()" >Assign bugs</button>
           <button class="btn btn-info btn-fill" (click)="navigateToUrl('add')">Report a bug</button>
         </div>
       </div>
@@ -20,6 +21,7 @@
             <thead>
                 <tr>
                     <th class="text-center">#</th>
+                    <th class="text-center">#</th>
                     <th class="text-center">Summary</th>
                     <th class="text-center">Program - Version</th>
                     <th class="text-center">Report type</th>
@@ -30,6 +32,12 @@
             </thead>
             <tbody>
                 <tr *ngFor="let bug of bugs?.results">
+                    <td class="text-center">
+                        <div class="checkbox">
+                            <input type="checkbox" [(ngModel)]="bug.checked" id="checkbox2" data-toggle="checkbox">
+                            <label for="checkbox2"></label>
+                        </div>
+                    </td>
                     <td class="text-center">{{bug.id}}</td>
                     <td class="text-center">{{(bug.summary.length > 25) ? (bug.summary | slice:0:25) + '...' : bug.summary }}</td>
                     <td class="text-center">{{bug.program.name}} - {{bug.bug_version.name}}</td>
@@ -41,7 +49,7 @@
                             <button class="btn btn-primary btn-fill" (click)="navigateToUrl('edit/' + bug.id)">
                                 <fa-icon [icon]="['far', 'eye']" size="sm"></fa-icon>
                             </button>
-                            <button class="btn btn-danger btn-fill" (click)="openDialogDeleteBug(bug)">
+                            <button class="btn btn-danger btn-fill" *ngIf="canDelete()" (click)="openDialogDeleteBug(bug)">
                               <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
                           </button>
                         </div>

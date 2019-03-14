@@ -59,9 +59,14 @@ export class BugsAddComponent implements OnInit {
         bug_obj.program = this.selectedProgram;
         bug_obj.bug_version = this.selectedVersion;
         bug_obj.reported_date = moment().format('YYYY-MM-DD');
-        if (bug_obj.summary == "" || bug_obj.summary == " ") {
+
+        if (bug_obj.summary.trim() == '') {
             this.toastr.error('Summary Needed.')
         }
+        if (bug_obj.description.trim() == '') {
+            this.toastr.error('Description Needed.')
+        }
+
         
         this.bugService.createBug(bug_obj).subscribe(res => {
             this.toastr.success('Bug created.')

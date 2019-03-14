@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from bugs.models import Area
 from programs.models import Program, Version
 from rest_framework.exceptions import NotAcceptable
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,13 +22,20 @@ class VersionSerializer(serializers.ModelSerializer):
         }
 
 
+class AreaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Area
+        fields = ('id', 'name')
+
+
 class ProgramSerializer(serializers.ModelSerializer):
     versions = VersionSerializer(many=True)
     id = serializers.IntegerField(required=False)
+    areas = AreaSerializer(many=True)
 
     def create(self, validated_data):
         versions_data = validated_data.pop('versions')
-        version_instances = []
         instance = Program(name=validated_data['name'])
         instance.save()
 
@@ -38,6 +46,20 @@ class ProgramSerializer(serializers.ModelSerializer):
                 version.save()
             except IntegrityError:
                 pass
+
+        areas_data = validated_data.pop('areas')
+        area_instances = []
+        for v in areas_data:
+            area = Area(name=v['name'], program=instance)
+            area.save()
+            try:
+                area_instances.append(area)
+            except IntegrityError:
+                raise NotAcceptable(detail={
+                    'message': 'A version with this name already exist.',
+                    'version': v
+                })
+            instance.save()
 
         # instance = Program.objects.get(id=instance.id)
         return instance
@@ -74,6 +96,27 @@ class ProgramSerializer(serializers.ModelSerializer):
                     'version': v
                 })
             instance.save()
+
+        areas_data = validated_data.pop('areas')
+        area_instances = []
+        for v in areas_data:
+            try:
+                if 'id' in v:
+                    area = Area.objects.get(id=v['id'])
+                    area.name = v['name']
+                    area.save()
+                    area_instances.append(area)
+                else:
+                    area = Area(name=v['name'], program=instance)
+                    area.save()
+                    area_instances.append(area)
+            except IntegrityError:
+                raise NotAcceptable(detail={
+                    'message': 'A version with this name already exist.',
+                    'version': v
+                })
+            instance.save()
+
         return instance
 
     class Meta:

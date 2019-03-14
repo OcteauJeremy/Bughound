@@ -13,6 +13,7 @@ import { TablesComponent } from '../../tables/tables.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -21,6 +22,8 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     LbdModule,
+      OwlDateTimeModule,
+      OwlNativeDateTimeModule,
   ],
   declarations: [
     HomeComponent,

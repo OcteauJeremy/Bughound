@@ -24,7 +24,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Release</label>
+                                    <label>Version</label>
                                     <ng-select [items]="selectedProgram?.versions"
                                                bindLabel="name"
                                                [(ngModel)]="selectedVersion"
@@ -122,13 +122,26 @@
                 <div class="content">
                     <form>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group select-form">
                                     <label>Functionnal Area</label>
-                                    <ng-select [items]="areas"
+                                    <ng-select [items]="bug.program?.areas"
+                                               [compareWith]="compId"
                                                bindLabel="name"
                                                bindValue="value"
                                                [(ngModel)]="selectedArea"
+                                               [ngModelOptions]="{standalone: true}"
+                                               [clearable]="false"
+                                               width="100%">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Version</label>
+                                    <ng-select [items]="selectedProgram?.versions"
+                                               bindLabel="name"
+                                               [(ngModel)]="selectedSolvedVersion"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
                                                width="100%">
@@ -153,6 +166,7 @@
                                                bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedStatus"
+                                               [compareWith]="compId"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
                                                width="100%">
@@ -166,6 +180,7 @@
                                                bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedPriorities"
+                                               [compareWith]="compId"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
                                                width="100%">
@@ -180,6 +195,7 @@
                                                bindLabel="name"
                                                [(ngModel)]="selectedResolution"
                                                [ngModelOptions]="{standalone: true}"
+                                               [compareWith]="compId"
                                                [clearable]="false"
                                                width="100%">
                                     </ng-select>
@@ -188,9 +204,15 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group dp-container">
                                     <label>Solved Date</label>
-                                    <ngb-datepicker #dp [(ngModel)]="selectedDate"></ngb-datepicker>
+                                    <input placeholder="Date Time:"
+                                           class="dp-input"
+
+                                           [(ngModel)]="bug.solved_date"
+                                           [ngModelOptions]="{standalone: true}"
+                                           [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                                            <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +226,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content bottom-bar">
-                    <button class="btn btn-info btn-fill" (click)="createBug()">Create</button>
+                    <button class="btn btn-info btn-fill" (click)="updateBug()">Update</button>
                 </div>
             </div>
         </div>

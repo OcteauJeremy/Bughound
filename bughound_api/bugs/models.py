@@ -74,7 +74,7 @@ class Bug(models.Model):
     summary = models.TextField()
     reproducible = models.BooleanField(default=False)
     description = models.TextField()
-    suggested_fix = models.TextField()
+    suggested_fix = models.TextField(blank=True)
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reported_bugs')
     reported_date = models.DateField()
 

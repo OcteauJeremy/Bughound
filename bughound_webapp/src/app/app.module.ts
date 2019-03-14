@@ -19,6 +19,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CookieService } from 'ngx-cookie-service';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -33,6 +34,8 @@ import { CookieService } from 'ngx-cookie-service';
       HttpClientModule,
       ToastrModule.forRoot(),
       NgSelectModule,
+      OwlDateTimeModule,
+      OwlNativeDateTimeModule,
       FontAwesomeModule
   ],
   declarations: [

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BugService } from '../../services/bug.service';
 import { getChoiceFromValue } from '../bugs-utils';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-bugs-list',
@@ -21,7 +22,8 @@ export class BugsListComponent implements OnInit {
 
     getName = getChoiceFromValue;
 
-    constructor(private router: Router, private bugService: BugService, public dialog: MatDialog, private toastr: ToastrService) { }
+    constructor(private router: Router, private bugService: BugService, public dialog: MatDialog, private toastr: ToastrService,
+                private as: AuthenticationService) { }
 
     ngOnInit() {
         this.loadBugs()
@@ -37,39 +39,57 @@ export class BugsListComponent implements OnInit {
         });
     }
 
-    openDialogDeleteBug(bug): void {
-        const dialogRef = this.dialog.open(DialogConfirmDeleteBug, {
-            width: '550px',
-            data: {bug: bug}
-        });
+    canDelete() {
+        return this.as.isAdmin();
+    }
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.bugService.deleteBug(bug).subscribe(res => {
-                    this.params_page = {
-                        page_size: 10,
-                        page: 1
-                    };
-                    this.loadBugs();
-                    this.toastr.success('Bug ' + result.name + ' deleted.');
-                });
+    assignBugs() {
+
+        for (let bug of this.bugs.results) {
+            console.log(bug.checked);
+            if (bug.checked) {
+                bug['assigned_to'] = this.as.getUser();
+                this.bugService.updateBug(bug).subscribe(res => {
+                    this.toastr.success('Bug ' + bug.id + ' assigned');
+                    bug = res;
+                })
             }
-        });
-    }
-}
-
-@Component({
-    selector: 'app-dialog-confirm-delete-bug',
-    templateUrl: 'dialog-confirm-delete-bug.html',
-})
-export class DialogConfirmDeleteBug {
-
-    constructor(
-        public dialogRef: MatDialogRef<DialogConfirmDeleteBug>,
-        @Inject(MAT_DIALOG_DATA) public data) {}
-
-    onNoClick(): void {
-        this.dialogRef.close();
+        }
     }
 
+    openDialogDeleteBug(bug): void {
+        // const dialogRef = this.dialog.open(DialogConfirmDeleteBug, {
+        //     width: '550px',
+        //     data: {bug: bug}
+        // });
+        //
+        // dialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+        //         this.bugService.deleteBug(bug).subscribe(res => {
+        //             this.params_page = {
+        //                 page_size: 10,
+        //                 page: 1
+        //             };
+        //             this.loadBugs();
+        //             this.toastr.success('Bug ' + result.name + ' deleted.');
+        //         });
+        //     }
+        // });
+    }
 }
+//
+// @Component({
+//     selector: 'app-dialog-confirm-delete-bug',
+//     templateUrl: 'dialog-confirm-delete-bug.html',
+// })
+// export class DialogConfirmDeleteBug {
+//
+//     constructor(
+//         public dialogRef: MatDialogRef<DialogConfirmDeleteBug>,
+//         @Inject(MAT_DIALOG_DATA) public data) {}
+//
+//     onNoClick(): void {
+//         this.dialogRef.close();
+//     }
+//
+// }

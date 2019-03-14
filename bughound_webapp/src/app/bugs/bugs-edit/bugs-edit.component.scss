@@ -1,0 +1,14 @@
+.dp-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.dp-input {
+  background-color: #FFFFFF;
+  border: 1px solid #E3E3E3;
+  border-radius: 4px;
+  color: #565656;
+  padding: 8px 12px;
+  height: 40px;
+  box-shadow: none;
+}

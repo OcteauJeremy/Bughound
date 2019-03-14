@@ -90,8 +90,7 @@ export class AuthenticationService extends ManagerService implements OnInit {
 
     public hasAuthority(groups) {
 
-        console.log(groups, this.user);
-        if (this.user && this.user.is_staff) {
+        if (this.user && this.user.is_superuser) {
             return true;
         }
 
@@ -104,7 +103,7 @@ export class AuthenticationService extends ManagerService implements OnInit {
         let validateGroups = 0;
         for (let auth of groups) {
             for (let group of this.user.groups) {
-                if (group == auth) {
+                if (group.name == auth.name) {
                     ++validateGroups;
                 }
             }
