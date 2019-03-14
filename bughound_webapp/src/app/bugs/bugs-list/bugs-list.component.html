@@ -117,7 +117,7 @@
                                 bug.summary }}
                             </td>
                             <td class="text-center">{{bug.program.name}} - {{bug.bug_version.name}}</td>
-                            <th *ngIf="isDevelopper() || isAdmin()">{{bug.assigned_to.username}}</th>
+                            <th *ngIf="isDevelopper() || isAdmin()">{{bug.assigned_to?.username}}</th>
                             <td class="text-center">{{getName(bug.report_type, 'REPORT_TYPES')}}</td>
                             <td class="text-center">{{getName(bug.status, 'STATUS')}}</td>
                             <td class="text-center">{{getName(bug.severity, 'SEVERITIES')}}</td>
