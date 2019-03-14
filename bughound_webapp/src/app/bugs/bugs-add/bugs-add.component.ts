@@ -81,7 +81,6 @@ export class BugsAddComponent implements OnInit {
         this.bug.suggested_fix = '';
         this.bug.reported_date = null;
         this.toastr.success('Bug reset.')
-        //this.router.navigate(['dashboard/bugs/add']);
     }
 
     cancelBug() {
