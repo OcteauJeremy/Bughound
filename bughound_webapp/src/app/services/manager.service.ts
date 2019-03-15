@@ -13,7 +13,7 @@ export class ManagerService {
   public baseUrl = environment.apiUrl;
   // public cookieService: CookieService;
 
-  constructor(protected http: HttpClient, private cookieService: CookieService) {
+  constructor(protected http: HttpClient, protected cookieService: CookieService) {
     // this.cookieService = new CookieService();
   }
 
@@ -44,12 +44,12 @@ export class ManagerService {
 
     headers = this.generateHeadersAuth(headers);
 
-    if (supHeader != null) {
-        for (let key in supHeader) {
-            console.log(key, supHeader[key]);
-            headers = headers.append(key, supHeader[key]);
-        }
-    }
+    // if (supHeader != null) {
+    //     for (let key in supHeader) {
+    //         console.log(key, supHeader[key]);
+    //         headers = headers.append(key, supHeader[key]);
+    //     }
+    // }
 
     return this.http.get<any>(this.baseUrl + url, {
       params: queryParams,

@@ -13,8 +13,8 @@ export class AuthenticationService extends ManagerService implements OnInit {
     user = null;
     public isConnected = new Subject<any>();
 
-    constructor(protected http: HttpClient, private cookieService: CookieService) {
-        super(http);
+    constructor(protected http: HttpClient, protected cookieService: CookieService) {
+        super(http, cookieService);
     }
 
     ngOnInit() {

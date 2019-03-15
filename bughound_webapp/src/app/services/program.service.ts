@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ManagerService } from './manager.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramService extends ManagerService {
-    constructor(protected http: HttpClient) {
-        super(http);
+    constructor(protected http: HttpClient, protected cookieService: CookieService) {
+        super(http, cookieService);
     }
 
     listPrograms(params) {
