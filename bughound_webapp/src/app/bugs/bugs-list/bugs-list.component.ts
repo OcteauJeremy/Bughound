@@ -70,32 +70,40 @@ export class BugsListComponent implements OnInit {
         this.router.navigate(['/dashboard/bugs/' + url]);
     }
 
-    loadBugs() {
-        let params = {...this.params_page};
+    createParamsFilter(params) {
+        let paramsFilter = {...params};
 
         if (this.filters.search) {
-            params['search'] = this.filters.search;
+            paramsFilter['search'] = this.filters.search;
         }
 
         if (this.filters.reproducible) {
-            params['reproducible'] = this.filters.reproducible;
+            paramsFilter['reproducible'] = this.filters.reproducible;
         }
 
         if (this.filters.status) {
-            params['status'] = this.filters.status;
+            paramsFilter['status'] = this.filters.status;
         }
 
         if (this.filters.severity) {
-            params['severity'] = this.filters.severity;
+            paramsFilter['severity'] = this.filters.severity;
         }
 
         if (this.filters.program) {
-            params['program__id'] = this.filters.program.id;
+            paramsFilter['program__id'] = this.filters.program.id;
         }
 
         if (this.filters.version) {
-            params['bug_version__id'] = this.filters.version.id;
+            paramsFilter['bug_version__id'] = this.filters.version.id;
         }
+
+        return paramsFilter;
+    }
+
+    loadBugs() {
+        let params = {...this.params_page};
+
+        params = this.createParamsFilter(params);
 
         this.bugService.listBugs(params).subscribe(res => {
             this.bugs = res;
@@ -128,6 +136,26 @@ export class BugsListComponent implements OnInit {
             }
         }
         return true;
+    }
+
+    downLoadFile(data: any, type: string) {
+        var blob = new Blob([data], { type: type});
+        var url = window.URL.createObjectURL(blob);
+        var pwa = window.open(url);
+        if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+            alert( 'Please disable your Pop-up blocker and try again.');
+        }
+    }
+
+    exportResults(type) {
+        let params = this.createParamsFilter({});
+
+        params['type'] = type;
+
+        this.bugService.exportBugs(params).subscribe(res => {
+            console.log(res);
+            this.downLoadFile(res, 'text/csv')
+        })
     }
 
     assignBugs() {

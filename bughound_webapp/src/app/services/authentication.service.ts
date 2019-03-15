@@ -27,6 +27,8 @@ export class AuthenticationService extends ManagerService implements OnInit {
     public logout() {
         this.post('/auth/logout/', {}).subscribe(res => {
             this.isConnected.next(false);
+            this.cookieService.delete('bughound-user');
+            this.cookieService.delete('bughound-token');
         });
     }
 

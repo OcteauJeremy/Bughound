@@ -1,5 +1,6 @@
 import csv
 import datetime
+from collections import OrderedDict
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -82,9 +83,10 @@ class AreaListView(mixins.ListModelMixin,
 
 @api_view(['GET'])
 def export_results(request):
-    type = request.query_params.pop('type')
+    query_params = OrderedDict(request.query_params)
+    type = query_params.pop('type')
 
-    queryset = Bug.objects.filter(**request.query_params)
+    queryset = Bug.objects.filter(**query_params)
 
     d = datetime.datetime.today()
     response = HttpResponse(content_type='text/csv')
@@ -95,14 +97,23 @@ def export_results(request):
                      'description', 'suggested_fix', 'reported_by', 'reported_date', 'functionnal_area', 'assigned_to', 'comments'
                      'status', 'priority', 'resolution', 'resolution version'])
     for obj in queryset:
-        row = [obj.email, obj.first_name, obj.last_name,
-               obj.country.name, obj.profile.vip]
-        last_sub = obj.subscriptions_history.first()
-        if last_sub is not None:
-            row += [last_sub.start, last_sub.end, '{0} {1}'.format(last_sub.duration, last_sub.type),
-                    last_sub.price, last_sub.renew]
-        else:
-            row += ['', '', '', '', '']
 
-        row.append(obj.profile.device)
+        functionnal_area = ''
+        if obj.functional_area is not None:
+            functionnal_area = obj.functional_area.name
+
+        assigned_to = ''
+        if obj.assigned_to is not None:
+            assigned_to = obj.assigned_to.username
+
+        resolution = ''
+        if obj.resolution_version is not None:
+            resolution = obj.resolution_version.name
+
+        row = [obj.program.name, obj.bug_version.name, obj.get_report_type_display(), obj.get_severity_display(),
+               obj.summary, obj.reproducible, obj.description, obj.suggested_fix, obj.reported_by.username, obj.reported_date,
+               functionnal_area, assigned_to, obj.comments, obj.get_status_display(), obj.get_priority_display(),
+               obj.get_resolution_display(), resolution]
         writer.writerow(row)
+
+    return response

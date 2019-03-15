@@ -33,4 +33,8 @@ export class BugService extends ManagerService{
     getAreas() {
         return this.get('/areas/');
     }
+
+    exportBugs(params) {
+        return this.getQuery('/export_results/', params);
+    }
 }
