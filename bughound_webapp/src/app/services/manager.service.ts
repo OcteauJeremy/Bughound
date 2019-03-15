@@ -38,10 +38,17 @@ export class ManagerService {
     }));
   }
 
-  getQuery(url, queryParams) {
+  getQuery(url, queryParams, supHeader = null) {
     let headers = new HttpHeaders();
 
     headers = ManagerService.generateHeadersAuth(headers);
+
+    if (supHeader != null) {
+        for (let key in supHeader) {
+            console.log(key, supHeader[key]);
+            headers = headers.append(key, supHeader[key]);
+        }
+    }
 
     return this.http.get<any>(this.baseUrl + url, {
       params: queryParams,

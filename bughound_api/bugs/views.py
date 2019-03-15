@@ -93,8 +93,8 @@ def export_results(request):
     response['Content-Disposition'] = 'attachment; filename={0}_{1}.csv'.format('list_bugs', d.strftime('%d-%m-%Y'))
     writer = csv.writer(response)
 
-    writer.writerow(['program', 'program version' 'report type', 'severity', 'summary', 'reproducible',
-                     'description', 'suggested_fix', 'reported_by', 'reported_date', 'functionnal_area', 'assigned_to', 'comments'
+    writer.writerow(['program', 'program version', 'report type', 'severity', 'summary', 'reproducible', 'description',
+                     'suggested_fix', 'reported_by', 'reported_date', 'functionnal_area', 'assigned_to', 'comments'
                      'status', 'priority', 'resolution', 'resolution version'])
     for obj in queryset:
 

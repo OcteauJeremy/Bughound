@@ -35,6 +35,8 @@ export class BugService extends ManagerService{
     }
 
     exportBugs(params) {
-        return this.getQuery('/export_results/', params);
+        return this.getQuery('/export_results/', params, {
+            'content-type': 'text/csv',
+        });
     }
 }

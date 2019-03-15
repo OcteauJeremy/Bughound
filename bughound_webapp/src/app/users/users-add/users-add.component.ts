@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { getError, trigger_error_form } from '../../bugs/bugs-utils';
 
 @Component({
   selector: 'app-users-add',
@@ -42,6 +43,10 @@ export class UsersAddComponent implements OnInit {
     this.userService.createUser(this.user).subscribe(res => {
         this.toastr.success('User created');
         this.router.navigate(['/dashboard/users/'])
+    }, err => {
+        const an_error = getError(err);
+        trigger_error_form(err.error);
+        this.toastr.error(an_error['message'], an_error['title']);
     });
   }
 
