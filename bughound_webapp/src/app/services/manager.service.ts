@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,12 @@ export class ManagerService {
   public baseUrl = environment.apiUrl;
   // public cookieService: CookieService;
 
-  constructor(protected http: HttpClient) {
+  constructor(protected http: HttpClient, private cookieService: CookieService) {
     // this.cookieService = new CookieService();
   }
 
-  static generateHeadersAuth(headers: HttpHeaders) {
-    const token = localStorage.getItem('bughound-token');
+  public generateHeadersAuth(headers: HttpHeaders) {
+    const token = this.cookieService.get('bughound-token');
 
 
     if (token) {
@@ -29,7 +30,7 @@ export class ManagerService {
   get(url, disableHeaders = false) {
     let headers = new HttpHeaders();
 
-    headers = ManagerService.generateHeadersAuth(headers);
+    headers = this.generateHeadersAuth(headers);
 
     return this.http.get<any>(this.baseUrl + url, {
       headers: headers
@@ -41,7 +42,7 @@ export class ManagerService {
   getQuery(url, queryParams, supHeader = null) {
     let headers = new HttpHeaders();
 
-    headers = ManagerService.generateHeadersAuth(headers);
+    headers = this.generateHeadersAuth(headers);
 
     if (supHeader != null) {
         for (let key in supHeader) {
@@ -60,7 +61,7 @@ export class ManagerService {
     let headers = new HttpHeaders();
 
     if (header) {
-        headers = ManagerService.generateHeadersAuth(headers);
+        headers = this.generateHeadersAuth(headers);
     }
 
     return this.http.post<any>(this.baseUrl + url, body, {
@@ -73,7 +74,7 @@ export class ManagerService {
   put(url, body) {
     let headers = new HttpHeaders();
 
-    headers = ManagerService.generateHeadersAuth(headers);
+    headers = this.generateHeadersAuth(headers);
 
     return this.http.put(this.baseUrl + url, body, {
       headers: headers
@@ -85,7 +86,7 @@ export class ManagerService {
   delete(url) {
     let headers = new HttpHeaders();
 
-    headers = ManagerService.generateHeadersAuth(headers);
+    headers = this.generateHeadersAuth(headers);
 
     return this.http.delete<any>(this.baseUrl + url, {
       headers: headers
