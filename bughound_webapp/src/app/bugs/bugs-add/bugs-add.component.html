@@ -80,7 +80,7 @@
                                                [(ngModel)]="bug.reproducible" [ngModelOptions]="{standalone: true}">
                                         <label for="checkbox1"></label>
                                         <textarea class="form-control" rows="1"
-                                              [(ngModel)]="bug.description" [ngModelOptions]="{standalone: true}" placeholder="Here's how"></textarea>
+                                              [(ngModel)]="bug.description" [ngModelOptions]="{standalone: true}" placeholder="Details"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +103,8 @@
                                 </div>
                             </div>
                         </div>
+                        <label>Reported on</label><p>
+                        <input type="date" name="report">
                     </form>
                 </div>
             </div>
