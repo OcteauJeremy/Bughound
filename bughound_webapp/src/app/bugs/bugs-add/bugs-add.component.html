@@ -79,6 +79,8 @@
                                         <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox"
                                                [(ngModel)]="bug.reproducible" [ngModelOptions]="{standalone: true}">
                                         <label for="checkbox1"></label>
+                                        <textarea class="form-control" rows="1"
+                                              [(ngModel)]="bug.description" [ngModelOptions]="{standalone: true}" placeholder="Here's how"></textarea>
                                     </div>
                                 </div>
                             </div>
