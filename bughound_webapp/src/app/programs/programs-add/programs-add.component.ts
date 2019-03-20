@@ -31,6 +31,11 @@ export class ProgramsAddComponent implements OnInit {
 
         console.log(this.program);
 
+        if (program_obj.name == '') {
+            this.toastr.error('Missing name.');
+            return
+        }
+
         if (program_obj.versions.every(v => v.name == '')) {
             this.toastr.error('Missing version.');
             return
