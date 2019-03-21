@@ -18,7 +18,7 @@ class BugSerializer(serializers.ModelSerializer):
     suggested_fix = serializers.CharField(required=False, allow_blank=True)
 
     comments = serializers.CharField(required=False, allow_null=True, allow_blank=True)
-    functional_area = AreaSerializer(required=False)
+    functional_area = AreaSerializer(required=False, allow_null=True)
     assigned_to = UserSerializer(required=False, allow_null=True)
     resolution_version = VersionSerializer(required=False, allow_null=True)
 
