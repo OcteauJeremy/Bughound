@@ -1,7 +1,7 @@
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
-from rest_framework_jwt.serializers import User
 
 from bugs.models import Bug, Area, REPORT_TYPE, SEVERITY
 from programs.models import Program, Version
@@ -77,6 +77,9 @@ class BugSerializer(serializers.ModelSerializer):
 
         # instance.update(**validated_data)
         assigned_to_validated = validated_data.pop('assigned_to', None)
+        users = User.objects.all()
+        for u in users:
+            print(u, u.id)
         if assigned_to_validated is not None:
             try:
                 assigned_to_instance = User.objects.get(id=assigned_to_validated['id'])

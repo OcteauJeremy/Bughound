@@ -23,10 +23,12 @@ class VersionSerializer(serializers.ModelSerializer):
 
 
 class AreaSerializer(serializers.ModelSerializer):
+    program = serializers.CharField(read_only=True)
+    id = serializers.IntegerField(required=False)
 
     class Meta:
         model = Area
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'program')
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -79,6 +81,11 @@ class ProgramSerializer(serializers.ModelSerializer):
 
         versions_data = validated_data.pop('versions')
         version_instances = []
+
+        for v in instance.versions.all():
+            if any(v.id == x['id'] for x in versions_data) is False:
+                Version.objects.get(id=v.id).delete()
+
         for v in versions_data:
             try:
                 if 'id' in v:
@@ -99,6 +106,11 @@ class ProgramSerializer(serializers.ModelSerializer):
 
         areas_data = validated_data.pop('areas')
         area_instances = []
+
+        for v in instance.areas.all():
+            if any(v.id == x['id'] for x in areas_data) is False:
+                Area.objects.get(id=v.id).delete()
+
         for v in areas_data:
             try:
                 if 'id' in v:
@@ -112,9 +124,10 @@ class ProgramSerializer(serializers.ModelSerializer):
                     area_instances.append(area)
             except IntegrityError:
                 raise NotAcceptable(detail={
-                    'message': 'A version with this name already exist.',
+                    'message': 'An area with this name already exist.',
                     'version': v
                 })
+
             instance.save()
 
         return instance

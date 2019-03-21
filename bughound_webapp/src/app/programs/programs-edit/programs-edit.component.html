@@ -42,14 +42,14 @@
                                     <div class="form-group">
                                         <label>Version {{idx}}</label>
                                         <input type="text" class="form-control" placeholder="Version"
-                                               [ngModel]="version?.name" (ngModelChange)="version.name = $event;checkNumberInput()"
+                                               [ngModel]="version?.name" (ngModelChange)="version.name = $event;checkNumberInput(program.versions)"
                                                [ngModelOptions]="{standalone: true}">
                                     </div>
 
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-danger btn-fill" (click)="deleteVersion(idx)"
-                                            [disabled]="idx == 0 || !canDelete()">
+                                            [disabled]="version.name == '' || !canDelete()">
                                         <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
                                     </button>
                                 </td>
@@ -83,14 +83,14 @@
                                     <div class="form-group">
                                         <label>Area {{idx}}</label>
                                         <input type="text" class="form-control" placeholder="Area"
-                                               [ngModel]="area?.name" (ngModelChange)="area.name = $event;checkNumberInput()"
+                                               [ngModel]="area?.name" (ngModelChange)="area.name = $event;checkNumberInput(program.areas)"
                                                [ngModelOptions]="{standalone: true}">
                                     </div>
 
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-danger btn-fill" (click)="deleteVersion(idx)"
-                                            [disabled]="idx == 0 || !canDelete()">
+                                    <button class="btn btn-danger btn-fill" (click)="deleteArea(idx)"
+                                            [disabled]="!canDelete() || area.name == ''">
                                         <fa-icon [icon]="['far', 'trash-alt']" size="sm"></fa-icon>
                                     </button>
                                 </td>

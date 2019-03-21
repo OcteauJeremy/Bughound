@@ -11,12 +11,12 @@ import { Router } from '@angular/router';
 export class UsersAddComponent implements OnInit {
 
     user = {
-        first_name: 'Toto',
-        last_name: 'oklm',
-        username: 'eqmfqmf',
-        email: 'qwdq@tototo.com',
-        password1: '12qw34er56ty',
-        password2: '12qw34er56ty',
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+        password1: '',
+        password2: '',
         group_id: null
     };
 
@@ -36,26 +36,29 @@ export class UsersAddComponent implements OnInit {
 
     createUser() {
         this.user.group_id = this.selectedGroup.id;
-        if (this.user.first_name == '' || this.user.last_name == '' ||
-            this.user.password1 == '' || this.user.username == '') {
-            this.toastr.error('Missing field');
+        if (this.user.first_name.trim() == '' || this.user.last_name.trim() == '' ) {
+            this.toastr.error('The fields First Name and Last Name can\'t be blank.');
+            return ;
         }
 
         this.userService.createUser(this.user).subscribe(res => {
             this.toastr.success('User created');
             this.router.navigate(['/dashboard/users/'])
         }, err => {
-            const an_error = this.getError(err);
-            this.trigger_error_form(err.error);
+            const an_error = this.getError(err.error);
             this.toastr.error(an_error['message'], an_error['title']);
         });
     }
 
     getError(err) {
-        const key = Object.keys(err.error)[0];
-        const message = err.error[key];
+        const key = Object.keys(err)[0];
+        const message = err[key];
 
-        const trad_key = {};
+        const trad_key = {
+            'password1': 'Password',
+            'password2': 'Confirm Password',
+            'non_fields_error': 'Password'
+        };
 
         let title = key;
 
@@ -69,26 +72,6 @@ export class UsersAddComponent implements OnInit {
             message: message,
             title: title.toUpperCase()
         };
-    }
-
-    trigger_error_form(errors) {
-
-        let inputs = this.el.nativeElement.querySelectorAll('.input-login');
-
-        for (let input of inputs) {
-            this.renderer.removeClass(input, 'error-input');
-
-        }
-
-        for (let key in errors) {
-
-            if (key == 'password2') {
-                continue;
-            }
-
-            let input = this.el.nativeElement.querySelector('#' + key);
-            this.renderer.addClass(input, 'error-input');
-        }
     }
 
 }

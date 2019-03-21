@@ -33,7 +33,10 @@ export class AuthenticationService extends ManagerService implements OnInit {
     }
 
     retrieveCookie() {
-        this.user = JSON.parse(this.cookieService.get('bughound-user'));
+        const user = this.cookieService.get('bughound-user');
+        if (user) {
+            this.user = JSON.parse(user);
+        }
     }
 
 
@@ -61,23 +64,26 @@ export class AuthenticationService extends ManagerService implements OnInit {
     }
 
     public isAdmin() {
-        if (this.user.is_superuser)
+        if (this.user.is_superuser) {
             return true;
+        }
         return false;
     }
 
     public isEmployee() {
-        for (let group of this.user.groups) {
-            if (group.name == 'Employee')
+        for (const group of this.user.groups) {
+            if (group.name == 'Employee') {
                 return true;
+            }
         }
         return false;
     }
 
     public isDevelopper() {
-        for (let group of this.user.groups) {
-            if (group.name == 'Developer')
+        for (const group of this.user.groups) {
+            if (group.name == 'Developer') {
                 return true;
+            }
         }
         return false;
     }
@@ -103,8 +109,8 @@ export class AuthenticationService extends ManagerService implements OnInit {
         }
 
         let validateGroups = 0;
-        for (let auth of groups) {
-            for (let group of this.user.groups) {
+        for (const auth of groups) {
+            for (const group of this.user.groups) {
                 if (group.name == auth.name) {
                     ++validateGroups;
                 }

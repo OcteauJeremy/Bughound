@@ -100,10 +100,11 @@ export class BugsEditComponent implements OnInit {
     }
 
     syncBugCmp() {
-        if (this.bug.reported_by.id != this.as.getUser().id) {
-            this.disableUserReport = true
+        if (this.bug.reported_by.id == this.as.getUser().id) {
+            this.disableUserReport = false
+        } else {
+            this.disableUserReport = !this.as.hasAuthority('admin');
         }
-        this.disableUserReport = !this.as.hasAuthority('admin');
         this.selectedProgram = this.bug.program;
         this.selectedVersion = this.bug.bug_version;
         this.selectedArea = this.bug.area;

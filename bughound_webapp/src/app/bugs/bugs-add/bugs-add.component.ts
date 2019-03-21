@@ -62,17 +62,20 @@ export class BugsAddComponent implements OnInit {
         bug_obj.bug_version = this.selectedVersion;
         bug_obj.reported_date = moment().format('YYYY-MM-DD');
 
-        if (bug_obj.summary.trim() == '') {
-            this.toastr.error('Summary Needed.')
-        }
-        if (bug_obj.description.trim() == '') {
-            this.toastr.error('Description Needed.')
-        }
+        // if (bug_obj.summary.trim() == '') {
+        //     this.toastr.error('Summary Needed.')
+        // }
+        // if (bug_obj.description.trim() == '') {
+        //     this.toastr.error('Description Needed.')
+        // }
 
         
         this.bugService.createBug(bug_obj).subscribe(res => {
             this.toastr.success('Bug created.')
             this.router.navigate(['/dashboard/bugs']);
+        }, err => {
+            const an_error = this.getError(err.error);
+            this.toastr.error(an_error['message'], an_error['title']);
         });
     }
 
@@ -91,7 +94,27 @@ export class BugsAddComponent implements OnInit {
     }
 
     cancelBug() {
-        this.toastr.success('Operation cancel')
+        this.toastr.success('Operation cancel');
         this.router.navigate(['dashboard/bugs']);
+    }
+
+    getError(err) {
+        const key = Object.keys(err)[0];
+        const message = err[key];
+
+        const trad_key = {};
+
+        let title = key;
+
+        if (title in trad_key) {
+            title = trad_key[key]
+        } else {
+            title = key;
+        }
+
+        return {
+            message: message,
+            title: title.toUpperCase()
+        };
     }
 }

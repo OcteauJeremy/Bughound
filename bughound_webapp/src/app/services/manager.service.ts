@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class ManagerService {
     return this.http.get<any>(this.baseUrl + url, {
       headers: headers
     }).pipe(catchError((error: Response | any) => {
-      return Observable.throw(error);
+      return throwError(error);
     }));
   }
 
@@ -67,7 +68,7 @@ export class ManagerService {
     return this.http.post<any>(this.baseUrl + url, body, {
       headers: headers
     }).pipe(catchError((error: Response | any) => {
-      return Observable.throw(error);
+      return throwError(error);
     }));
   }
 
@@ -79,7 +80,7 @@ export class ManagerService {
     return this.http.put(this.baseUrl + url, body, {
       headers: headers
     }).pipe(catchError((error: Response | any) => {
-      return Observable.throw(error);
+      return throwError(error);
     }));
   }
 
@@ -91,7 +92,7 @@ export class ManagerService {
     return this.http.delete<any>(this.baseUrl + url, {
       headers: headers
     }).pipe(catchError((error: Response | any) => {
-      return Observable.throw(error);
+      return throwError(error);
     }));
   }
 }
