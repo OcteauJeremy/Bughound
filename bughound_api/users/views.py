@@ -1,8 +1,12 @@
+from collections import OrderedDict
+
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from rest_framework import generics, mixins
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from users.permissions import CanModifyPermission
@@ -68,3 +72,18 @@ class GroupView(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
+
+@api_view(['GET'])
+def export_results(request):
+    query_params = OrderedDict(request.query_params)
+    type = query_params.pop('type')
+
+    queryset = User.objects.all().exclude(is_superuser=True)
+
+    if type.lower() == 'csv':
+        finalStr = 'First Name,Last Name,Username,Email,Type'
+        for user in queryset:
+            finalStr += '#{0},{1},{2},{3},{4}'.format(user.first_name, user.last_name, user.username, user.email,
+                                                     user.groups.first().name)
+
+    return Response({'result': finalStr})

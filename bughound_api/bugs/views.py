@@ -15,6 +15,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters import rest_framework as filters
+from rest_framework.response import Response
 
 from bugs.models import Bug, Area
 from bugs.serializers import BugSerializer, AreaSerializer
@@ -88,16 +89,11 @@ def export_results(request):
 
     queryset = Bug.objects.filter(**query_params)
 
-    d = datetime.datetime.today()
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename={0}_{1}.csv'.format('list_bugs', d.strftime('%d-%m-%Y'))
-    writer = csv.writer(response)
+    finalStr = 'Program,Program Version,Report Type,Severity,Summary,Reproducible,Description,Suggested Fix,Reported by,' \
+               'Reported Date,Functionnal Area,Assigned To,Comments,Status,Priority,Resolution,Resolution version'
 
-    writer.writerow(['program', 'program version', 'report type', 'severity', 'summary', 'reproducible', 'description',
-                     'suggested_fix', 'reported_by', 'reported_date', 'functionnal_area', 'assigned_to', 'comments'
-                     'status', 'priority', 'resolution', 'resolution version'])
     for obj in queryset:
-
+        finalStr += '#'
         functionnal_area = ''
         if obj.functional_area is not None:
             functionnal_area = obj.functional_area.name
@@ -110,10 +106,9 @@ def export_results(request):
         if obj.resolution_version is not None:
             resolution = obj.resolution_version.name
 
-        row = [obj.program.name, obj.bug_version.name, obj.get_report_type_display(), obj.get_severity_display(),
+        finalStr += '{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}'.format(obj.program.name, obj.bug_version.name, obj.get_report_type_display(), obj.get_severity_display(),
                obj.summary, obj.reproducible, obj.description, obj.suggested_fix, obj.reported_by.username, obj.reported_date,
                functionnal_area, assigned_to, obj.comments, obj.get_status_display(), obj.get_priority_display(),
-               obj.get_resolution_display(), resolution]
-        writer.writerow(row)
+               obj.get_resolution_display(), resolution)
 
-    return response
+    return Response({'result': finalStr})

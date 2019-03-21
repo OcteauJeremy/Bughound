@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 @Component({
-  selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+    selector: 'app-users-list',
+    templateUrl: './users-list.component.html',
+    styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
 
@@ -18,7 +19,8 @@ export class UsersListComponent implements OnInit {
     users = null;
 
     constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
-                private toastr: ToastrService) { }
+                private toastr: ToastrService) {
+    }
 
     openDialogDeleteUser(user): void {
         const dialogRef = this.dialog.open(DialogConfirmDeleteUser, {
@@ -41,7 +43,7 @@ export class UsersListComponent implements OnInit {
     }
 
     ngOnInit() {
-       this.loadUsers()
+        this.loadUsers()
     }
 
     navigateToUrl(url) {
@@ -57,6 +59,29 @@ export class UsersListComponent implements OnInit {
     getUserRole(user) {
         return user.groups.map(e => e.name).join(',');
     }
+
+    exportResults(type) {
+        this.userService.exportUsers({type: type}).subscribe(res => {
+            const csvList = res.result.split('#');
+            const headers = csvList.shift().split(',');
+
+            const options = {
+                headers: headers,
+            };
+
+            let finalData = [];
+            for (let row of csvList) {
+                let dataSplitted = {};
+                const rowSplitted = row.split(',');
+
+                rowSplitted.forEach((val, idx) => {
+                    dataSplitted[headers[idx]] = val;
+                });
+                finalData.push(dataSplitted);
+            }
+            new Angular5Csv(finalData, 'users-export', options);
+        });
+    }
 }
 
 
@@ -68,7 +93,8 @@ export class DialogConfirmDeleteUser {
 
     constructor(
         public dialogRef: MatDialogRef<DialogConfirmDeleteUser>,
-        @Inject(MAT_DIALOG_DATA) public data) {}
+        @Inject(MAT_DIALOG_DATA) public data) {
+    }
 
     onNoClick(): void {
         this.dialogRef.close();

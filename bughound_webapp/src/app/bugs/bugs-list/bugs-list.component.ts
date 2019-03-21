@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { FormControl } from '@angular/forms';
 import { ProgramService } from '../../services/program.service';
 import { debounceTime } from 'rxjs/operators';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 @Component({
     selector: 'app-bugs-list',
@@ -138,23 +139,30 @@ export class BugsListComponent implements OnInit {
         return true;
     }
 
-    downLoadFile(data: any, type: string) {
-        var blob = new Blob([data], { type: type});
-        var url = window.URL.createObjectURL(blob);
-        var pwa = window.open(url);
-        if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-            alert( 'Please disable your Pop-up blocker and try again.');
-        }
-    }
-
     exportResults(type) {
         let params = this.createParamsFilter({});
 
         params['type'] = type;
 
         this.bugService.exportBugs(params).subscribe(res => {
-            console.log(res);
-            this.downLoadFile(res, 'text/csv')
+            const csvList = res.result.split('#');
+            const headers = csvList.shift().split(',');
+
+            const options = {
+                headers: headers,
+            };
+
+            let finalData = [];
+            for (let row of csvList) {
+                let dataSplitted = {};
+                const rowSplitted = row.split(',');
+
+                rowSplitted.forEach((val, idx) => {
+                    dataSplitted[headers[idx]] = val;
+                });
+                finalData.push(dataSplitted);
+            }
+            new Angular5Csv(finalData, 'bugs-export', options);
         })
     }
 

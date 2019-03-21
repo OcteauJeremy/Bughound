@@ -1,0 +1,17 @@
+.toolbar {
+  margin-top: 20px;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .actions-container {
+    display: flex;
+
+    justify-content: space-around;
+    .plain-btn {
+      height: fit-content;
+    }
+  }
+}

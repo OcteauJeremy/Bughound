@@ -35,4 +35,8 @@ export class UserService extends ManagerService {
   deleteUser(user) {
       return this.delete('/users/' + user.id);
   }
+
+    exportUsers(params) {
+        return this.getQuery('/users/export_results/', params);
+    }
 }
