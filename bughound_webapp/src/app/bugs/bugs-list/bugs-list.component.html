@@ -91,7 +91,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th class="text-center">#</th>
+                            <th class="text-center" *ngIf="isDevelopper()">#</th>
                             <th class="text-center">#</th>
                             <th class="text-center">Summary</th>
                             <th class="text-center">Program - Version</th>
@@ -105,7 +105,7 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let bug of bugs?.results">
-                            <td class="text-center">
+                            <td class="text-center" *ngIf="isDevelopper()">
                                 <div class="checkbox" *ngIf="bug.assigned_to == null">
                                     <input type="checkbox" [(ngModel)]="bug.checked" [id]="'checkbox' + bug.id"
                                            data-toggle="checkbox">

@@ -41,6 +41,7 @@ export class AuthenticationService extends ManagerService implements OnInit {
 
 
     public setUser(user) {
+        this.cookieService.delete('bughound-user');
         this.cookieService.set('bughound-user', JSON.stringify(user));
         this.user = user;
         this.isConnected.next(true);
@@ -55,6 +56,7 @@ export class AuthenticationService extends ManagerService implements OnInit {
     }
 
     public setToken(token) {
+        this.cookieService.delete('bughound-token');
         this.cookieService.set('bughound-token', token);
         this.isConnected.next(true);
     }
@@ -101,8 +103,6 @@ export class AuthenticationService extends ManagerService implements OnInit {
         if (this.user && this.user.is_superuser) {
             return true;
         }
-
-        console.log(this.user);
 
         if (typeof groups == 'string') {
             groups = [groups]

@@ -174,11 +174,10 @@
                                 <div class="form-group">
                                     <label>Status</label>
                                     <ng-select [items]="status"
-                                               bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedStatus"
                                                [disabled]="disableDevReport"
-                                               [compareWith]="compId"
+                                               [compareWith]="compValue"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
                                                width="100%">
@@ -189,11 +188,10 @@
                                 <div class="form-group">
                                     <label>Priority</label>
                                     <ng-select [items]="priorities"
-                                               bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedPriorities"
                                                [disabled]="disableDevReport"
-                                               [compareWith]="compId"
+                                               [compareWith]="compValue"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
                                                width="100%">
@@ -204,12 +202,11 @@
                                 <div class="form-group">
                                     <label>Resolution</label>
                                     <ng-select [items]="resolutions"
-                                               bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedResolution"
                                                [disabled]="disableDevReport"
                                                [ngModelOptions]="{standalone: true}"
-                                               [compareWith]="compId"
+                                               [compareWith]="compValue"
                                                [clearable]="false"
                                                width="100%">
                                     </ng-select>

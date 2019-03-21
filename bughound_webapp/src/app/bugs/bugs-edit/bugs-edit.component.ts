@@ -75,8 +75,8 @@ export class BugsEditComponent implements OnInit {
         const id = this.route.snapshot.paramMap.get('id');
         this.isDevelopper = this.as.isDevelopper() || this.as.isAdmin();
         this.user = this.as.getUser();
-        console.log(this.user);
         this.bugService.getBug(id).subscribe(res => {
+            console.log(res);
             this.bug = res;
             this.disableDevReport = this.disabledDevReport();
             this.syncBugCmp();
@@ -107,7 +107,6 @@ export class BugsEditComponent implements OnInit {
         }
         this.selectedProgram = this.bug.program;
         this.selectedVersion = this.bug.bug_version;
-        this.selectedArea = this.bug.area;
         this.selectedStatus = this.bug['status'];
         this.selectedFunctionalArea = this.bug['functional_area'];
         this.selectedPriorities = this.bug['priority'];
@@ -122,24 +121,24 @@ export class BugsEditComponent implements OnInit {
     updateBug() {
         let objBug = {...this.bug};
 
+        console.log(this.selectedStatus);
         objBug.program = this.selectedProgram;
         objBug.bug_version = this.selectedVersion;
-        objBug.area = this.selectedArea;
-        objBug.status = this.selectedStatus;
-        objBug['priority'] = this.selectedPriorities;
-        objBug['resolution'] = this.selectedResolution;
+        objBug['status'] = this.selectedStatus.value;
+        objBug['priority'] = this.selectedPriorities.value;
         objBug['resolution_version'] = this.selectedSolvedVersion;
         objBug['functional_area'] = this.selectedFunctionalArea;
 
-        console.log(objBug, this.selectedFunctionalArea);
+        console.log(objBug);
         this.bugService.updateBug(objBug).subscribe(res => {
             this.bug = res;
             this.syncBugCmp();
             this.toastr.success('Bug updated.');
-            this.router.navigate(['/dashboard/bugs'])
+            // this.router.navigate(['/dashboard/bugs'])
         });
     }
 
     compId = (val1, val2) => val1.id == val2.id;
+    compValue = (val1, val2) => val1.value == val2;
 
 }

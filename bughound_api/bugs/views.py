@@ -56,7 +56,7 @@ class BugListView(mixins.ListModelMixin,
     pagination_class = StandardResultsSetPagination
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('summary', 'description', 'suggested_fix', 'assigned_to__username', 'assigned_to__first_name',
-                     'assigned_to__last_name')
+                     'assigned_to__last_name', 'reported_by__last_name', 'reported_by__first_name', 'reported_by__username')
     filterset_fields = ('reproducible', 'program__id', 'bug_version__id', 'status', 'severity')
 
     def get_queryset(self):

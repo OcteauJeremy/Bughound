@@ -30,6 +30,9 @@ export class UsersEditComponent implements OnInit {
     }
 
     updateUser() {
+
+      this.user.groups = [this.selectedGroup];
+
       this.userService.modifyUser(this.user).subscribe(res => {
           this.user = res;
           this.toastr.success('User modified.');

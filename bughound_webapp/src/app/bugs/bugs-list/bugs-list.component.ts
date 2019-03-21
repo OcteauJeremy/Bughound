@@ -77,23 +77,23 @@ export class BugsListComponent implements OnInit {
             paramsFilter['search'] = this.filters.search;
         }
 
-        if (this.filters.reproducible) {
+        if (this.filters.reproducible != undefined) {
             paramsFilter['reproducible'] = this.filters.reproducible;
         }
 
-        if (this.filters.status) {
+        if (this.filters.status != undefined) {
             paramsFilter['status'] = this.filters.status;
         }
 
-        if (this.filters.severity) {
+        if (this.filters.severity != undefined) {
             paramsFilter['severity'] = this.filters.severity;
         }
 
-        if (this.filters.program) {
+        if (this.filters.program != undefined) {
             paramsFilter['program__id'] = this.filters.program.id;
         }
 
-        if (this.filters.version) {
+        if (this.filters.version != undefined) {
             paramsFilter['bug_version__id'] = this.filters.version.id;
         }
 
