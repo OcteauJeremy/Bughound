@@ -71,7 +71,7 @@ export class BugsAddComponent implements OnInit {
 
         
         this.bugService.createBug(bug_obj).subscribe(res => {
-            this.toastr.success('Bug created.')
+            this.toastr.success('Bug created.');
             this.router.navigate(['/dashboard/bugs']);
         }, err => {
             const an_error = this.getError(err.error);
@@ -80,7 +80,6 @@ export class BugsAddComponent implements OnInit {
     }
 
     resetBug() {
-        let bug_obj = {...this.bug};
         this.bug.program = null;
         this.bug.bug_version = null;
         this.bug.report_type = 0;

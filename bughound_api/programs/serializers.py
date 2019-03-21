@@ -5,7 +5,6 @@ from programs.models import Program, Version
 from rest_framework.exceptions import NotAcceptable
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
-from rest_framework.response import Response
 
 
 class VersionSerializer(serializers.ModelSerializer):

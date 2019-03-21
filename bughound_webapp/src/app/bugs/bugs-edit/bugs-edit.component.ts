@@ -14,18 +14,14 @@ const moment = (_moment as any).default ? (_moment as any).default : _moment;
 @Component({
     selector: 'app-bugs-edit',
     templateUrl: './bugs-edit.component.html',
-    styleUrls: ['./bugs-edit.component.scss'],
-    providers: [
-        {provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE]},
-
-        {provide: OWL_DATE_TIME_FORMATS, useValue: ['YYYY-MM-DD']},
-    ]
+    styleUrls: ['./bugs-edit.component.scss']
 })
 export class BugsEditComponent implements OnInit {
 
     selectedProgram = null;
     selectedVersion = null;
-    selectedSolvedVersion = null
+    selectedSolvedVersion = null;
+    selectedFunctionalArea = null;
     programs = [];
 
     selectedArea = null;
@@ -68,6 +64,7 @@ export class BugsEditComponent implements OnInit {
     user = null;
 
     disableUserReport = false;
+    disableDevReport = false;
     isDevelopper = true;
 
     constructor(private programService: ProgramService, private bugService: BugService, private toastr: ToastrService,
@@ -81,6 +78,7 @@ export class BugsEditComponent implements OnInit {
         console.log(this.user);
         this.bugService.getBug(id).subscribe(res => {
             this.bug = res;
+            this.disableDevReport = this.disabledDevReport();
             this.syncBugCmp();
         });
     }
@@ -90,11 +88,13 @@ export class BugsEditComponent implements OnInit {
             return true;
         }
 
-        if (this.as.isAdmin())
+        if (this.as.isAdmin()) {
             return false;
+        }
 
-        if (this.bug.assigned_to != null && !this.user.id == this.bug.assigned_to.id)
+        if (this.bug.assigned_to != null && this.user.id == this.bug.assigned_to.id) {
             return false;
+        }
 
         return true;
     }
@@ -109,13 +109,30 @@ export class BugsEditComponent implements OnInit {
         this.selectedVersion = this.bug.bug_version;
         this.selectedArea = this.bug.area;
         this.selectedStatus = this.bug['status'];
+        this.selectedFunctionalArea = this.bug['functional_area'];
         this.selectedPriorities = this.bug['priority'];
         this.selectedResolution = this.bug['resolution'];
         this.selectedSolvedVersion = this.bug['resolution_version']
     }
 
+    formatDate(date) {
+        this.bug.solved_date = moment(date).format('YYYY-MM-DD');
+    }
+
     updateBug() {
-        this.bugService.updateBug(this.bug).subscribe(res => {
+        let objBug = {...this.bug};
+
+        objBug.program = this.selectedProgram;
+        objBug.bug_version = this.selectedVersion;
+        objBug.area = this.selectedArea;
+        objBug.status = this.selectedStatus;
+        objBug['priority'] = this.selectedPriorities;
+        objBug['resolution'] = this.selectedResolution;
+        objBug['resolution_version'] = this.selectedSolvedVersion;
+        objBug['functional_area'] = this.selectedFunctionalArea;
+
+        console.log(objBug, this.selectedFunctionalArea);
+        this.bugService.updateBug(objBug).subscribe(res => {
             this.bug = res;
             this.syncBugCmp();
             this.toastr.success('Bug updated.');

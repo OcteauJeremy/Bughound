@@ -5,17 +5,12 @@ from rest_framework.exceptions import NotFound
 
 from bugs.models import Bug, Area, REPORT_TYPE, SEVERITY
 from programs.models import Program, Version
-from programs.serializers import ProgramSerializer, VersionSerializer
+from programs.serializers import ProgramSerializer, VersionSerializer, AreaSerializer
 from users.serializers import UserSerializer
 
 
-class AreaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Area
-        fields = '__all__'
-
-
 class BugSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     program = ProgramSerializer()
     bug_version = VersionSerializer()
     reported_by = UserSerializer(required=False)
@@ -23,7 +18,7 @@ class BugSerializer(serializers.ModelSerializer):
     suggested_fix = serializers.CharField(required=False, allow_blank=True)
 
     comments = serializers.CharField(required=False, allow_null=True, allow_blank=True)
-    function_Area = AreaSerializer(required=False)
+    functional_area = AreaSerializer(required=False)
     assigned_to = UserSerializer(required=False, allow_null=True)
     resolution_version = VersionSerializer(required=False, allow_null=True)
 
@@ -53,7 +48,9 @@ class BugSerializer(serializers.ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
+        validated_data.pop('reported_by')
         program_validated = validated_data.pop('program')
+
         try:
             program = Program.objects.get(id=program_validated['id'])
             instance.program = program
@@ -66,20 +63,16 @@ class BugSerializer(serializers.ModelSerializer):
         version_validated = validated_data.pop('bug_version')
         try:
             version = Version.objects.get(id=version_validated['id'], program=program)
-            instance.version = version
+            instance.bug_version = version
         except ObjectDoesNotExist:
             raise NotFound(detail={
                 'message': 'Version doesn\'t exist.',
                 'version': version_validated
             })
 
-        validated_data.pop('reported_by')
 
         # instance.update(**validated_data)
         assigned_to_validated = validated_data.pop('assigned_to', None)
-        users = User.objects.all()
-        for u in users:
-            print(u, u.id)
         if assigned_to_validated is not None:
             try:
                 assigned_to_instance = User.objects.get(id=assigned_to_validated['id'])
@@ -90,9 +83,29 @@ class BugSerializer(serializers.ModelSerializer):
                     'user': assigned_to_validated
                 })
 
+        functional_area_validated = validated_data.pop('functional_area', None)
+        if functional_area_validated is not None:
+            try:
+                instance.functional_area = Area.objects.get(id=functional_area_validated['id'])
+            except ObjectDoesNotExist:
+                raise NotFound(detail={
+                    'message': 'Area doesn\'t exist.',
+                    'area': functional_area_validated
+                })
+
+        resolution_version_validated = validated_data.pop('resolution_version', None)
+        if resolution_version_validated is not None:
+            try:
+                instance.resolution_version = Version.objects.get(id=resolution_version_validated['id'])
+            except ObjectDoesNotExist:
+                raise NotFound(detail={
+                    'message': 'Version doesn\'t exist.',
+                    'version': resolution_version_validated
+                })
+
         instance.save()
 
-        instance = Bug.objects.update_or_create(id=instance.id, defaults=validated_data)
+        Bug.objects.filter(id=instance.id).update(**validated_data)
 
         return instance
 

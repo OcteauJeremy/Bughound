@@ -107,6 +107,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" *ngIf="bug.reported_date">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Reported date</label>
+                                    <input type="text" class="form-control" placeholder="Reported date"
+                                           [disabled]="true"
+                                           [ngModel]="bug.reported_date" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -125,12 +135,11 @@
                             <div class="col-md-5">
                                 <div class="form-group select-form">
                                     <label>Functionnal Area</label>
-                                    <ng-select [items]="bug?.program?.areas"
+                                    <ng-select [items]="selectedProgram?.areas"
                                                [compareWith]="compId"
                                                bindLabel="name"
-                                               [disabled]="disabledDevReport()"
-                                               bindValue="value"
-                                               [(ngModel)]="selectedArea"
+                                               [disabled]="disableDevReport"
+                                               [(ngModel)]="selectedFunctionalArea"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
                                                width="100%">
@@ -143,8 +152,8 @@
                                     <ng-select [items]="selectedProgram?.versions"
                                                bindLabel="name"
                                                [(ngModel)]="selectedSolvedVersion"
-                                               [disabled]="disabledDevReport()"
                                                [ngModelOptions]="{standalone: true}"
+                                               [disabled]="disableDevReport"
                                                [clearable]="false"
                                                width="100%">
                                     </ng-select>
@@ -155,8 +164,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Comments</label>
-                                    <textarea class="form-control" rows="4" [disabled]="disabledDevReport()"
-                                              [(ngModel)]="dev.comments" [ngModelOptions]="{standalone: true}"></textarea>
+                                    <textarea class="form-control" rows="4" [disabled]="disableDevReport"
+                                              [(ngModel)]="bug.comments" [ngModelOptions]="{standalone: true}"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +177,7 @@
                                                bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedStatus"
-                                               [disabled]="disabledDevReport()"
+                                               [disabled]="disableDevReport"
                                                [compareWith]="compId"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
@@ -183,7 +192,7 @@
                                                bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedPriorities"
-                                               [disabled]="disabledDevReport()"
+                                               [disabled]="disableDevReport"
                                                [compareWith]="compId"
                                                [ngModelOptions]="{standalone: true}"
                                                [clearable]="false"
@@ -198,7 +207,7 @@
                                                bindValue="value"
                                                bindLabel="name"
                                                [(ngModel)]="selectedResolution"
-                                               [disabled]="disabledDevReport()"
+                                               [disabled]="disableDevReport"
                                                [ngModelOptions]="{standalone: true}"
                                                [compareWith]="compId"
                                                [clearable]="false"
@@ -213,9 +222,10 @@
                                     <label>Solved Date</label>
                                     <input placeholder="Solved date"
                                            class="dp-input"
-                                           [disabled]="disabledDevReport()"
+                                           [disabled]="disableDevReport"
                                            [(ngModel)]="bug.solved_date"
                                            [ngModelOptions]="{standalone: true}"
+                                           (dateTimeChange)="formatDate($event)"
                                            [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
                                             <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                                 </div>
