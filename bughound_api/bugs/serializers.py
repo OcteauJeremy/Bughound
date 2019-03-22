@@ -107,6 +107,7 @@ class BugSerializer(serializers.ModelSerializer):
 
         Bug.objects.filter(id=instance.id).update(**validated_data)
 
+        instance.refresh_from_db()
         return instance
 
     class Meta:

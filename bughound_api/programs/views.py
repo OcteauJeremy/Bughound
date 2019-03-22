@@ -1,9 +1,13 @@
+from collections import OrderedDict
+
 import rules
 from django.shortcuts import render
 from rest_framework import mixins, generics
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters import rest_framework as filters
+from rest_framework.response import Response
 
 from programs.models import Program, Version
 from programs.serializers import ProgramSerializer, VersionSerializer
@@ -86,3 +90,25 @@ class VersionListView(mixins.ListModelMixin, mixins.CreateModelMixin,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+
+@api_view(['GET'])
+def export_results(request):
+    query_params = OrderedDict(request.query_params)
+    type = query_params.pop('type')
+
+    queryset = Program.objects.filter(**query_params)
+
+    finalStr = 'Name,Version,Areas,Open Bugs,Closed Bugs,Resolved Bugs'
+
+    for obj in queryset:
+        finalStr += '#'
+        versions_str = ';'.join([x.name for x in obj.versions.all()])
+        areas_str = ';'.join([x.name for x in obj.areas.all()])
+        nb_open = obj.bugs.filter(status=0).count()
+        nb_close = obj.bugs.filter(status=1).count()
+        nb_resolve = obj.bugs.filter(status=2).count()
+
+        finalStr += '{},{},{},{},{},{}'.format(obj.name, versions_str, areas_str, nb_open, nb_close, nb_resolve)
+
+    return Response({'result': finalStr})

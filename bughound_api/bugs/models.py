@@ -61,7 +61,7 @@ class Area(models.Model):
 
 
 class Bug(models.Model):
-    program = models.ForeignKey('programs.program', on_delete=models.CASCADE)
+    program = models.ForeignKey('programs.program', on_delete=models.CASCADE, related_name='bugs')
     bug_version = models.ForeignKey('programs.version', on_delete=models.CASCADE, related_name='reported_bugs')
     report_type = models.IntegerField(
         choices=REPORT_TYPE,

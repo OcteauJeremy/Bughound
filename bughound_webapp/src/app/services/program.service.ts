@@ -31,4 +31,8 @@ export class ProgramService extends ManagerService {
         return this.put('/programs/' + program.id, program);
     }
 
+    exportPrograms(params) {
+        return this.getQuery('/programs/export_results/', params);
+    }
+
 }
