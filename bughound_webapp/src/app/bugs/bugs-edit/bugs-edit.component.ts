@@ -134,7 +134,7 @@ export class BugsEditComponent implements OnInit {
             this.bug = res;
             this.syncBugCmp();
             this.toastr.success('Bug updated.');
-            // this.router.navigate(['/dashboard/bugs'])
+            this.router.navigate(['/dashboard/bugs'])
         });
     }
 
