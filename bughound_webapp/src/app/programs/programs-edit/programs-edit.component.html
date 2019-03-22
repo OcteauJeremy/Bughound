@@ -12,7 +12,7 @@
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" class="form-control" placeholder="First Name"
-                                           [ngModel]="program?.name" (ngModelChange)="program.name" [ngModelOptions]="{standalone: true}">
+                                           [ngModel]="program?.name" (ngModelChange)="program.name = $event" [ngModelOptions]="{standalone: true}">
                                 </div>
                             </div>
                         </div>

@@ -34,6 +34,7 @@ class ProgramSerializer(serializers.ModelSerializer):
     versions = VersionSerializer(many=True)
     id = serializers.IntegerField(required=False)
     areas = AreaSerializer(many=True)
+    name = serializers.CharField()
 
     def create(self, validated_data):
         versions_data = validated_data.pop('versions')

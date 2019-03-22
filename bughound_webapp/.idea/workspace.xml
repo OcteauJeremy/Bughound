@@ -17,14 +17,23 @@
     <splitter split-orientation="horizontal" split-proportion="0.6614951">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="bugs-list.component.ts" pinned="false" current-in-tab="true">
+          <file leaf-file-name="bugs-list.component.ts" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/app/bugs/bugs-list/bugs-list.component.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="33">
-                  <caret line="146" column="29" selection-start-line="146" selection-start-column="29" selection-end-line="146" selection-end-column="29" />
+                <state relative-caret-position="153">
+                  <caret line="154" lean-forward="true" selection-start-line="154" selection-end-line="154" />
                   <folding>
                     <element signature="e#0#58#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="programs-edit.component.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="209">
+                  <caret line="14" column="107" selection-start-line="14" selection-start-column="107" selection-end-line="14" selection-end-column="107" />
                 </state>
               </provider>
             </entry>
@@ -78,8 +87,8 @@
           <file leaf-file-name="users-list.component.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/app/users/users-list/users-list.component.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="383">
-                  <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+                <state relative-caret-position="143">
+                  <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
                   <folding>
                     <element signature="n#table#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
                   </folding>
@@ -208,7 +217,6 @@
         <option value="$PROJECT_DIR$/src/app/services/bug.service.ts" />
         <option value="$PROJECT_DIR$/src/app/bugs/bugs-utils.ts" />
         <option value="$PROJECT_DIR$/src/app/services/manager.service.ts" />
-        <option value="$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.html" />
         <option value="$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.ts" />
         <option value="$PROJECT_DIR$/src/app/users/users-add/users-add.component.ts" />
         <option value="$PROJECT_DIR$/src/app/bugs/bugs-add/bugs-add.component.html" />
@@ -229,6 +237,7 @@
         <option value="$PROJECT_DIR$/src/app/users/users-list/users-list.component.ts" />
         <option value="$PROJECT_DIR$/src/app/programs/programs-list/programs-list.component.ts" />
         <option value="$PROJECT_DIR$/src/app/bugs/bugs-list/bugs-list.component.ts" />
+        <option value="$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.html" />
       </list>
     </option>
   </component>
@@ -399,12 +408,12 @@
       <workItem from="1552265674321" duration="527000" />
       <workItem from="1552547413109" duration="22970000" />
       <workItem from="1552939954052" duration="628000" />
-      <workItem from="1553189568357" duration="10949000" />
+      <workItem from="1553189568357" duration="11270000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86996000" />
+    <option name="totallyTimeSpent" value="87317000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="962" extended-state="0" />
@@ -630,13 +639,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="85" column="136" selection-start-line="85" selection-start-column="136" selection-end-line="85" selection-end-column="136" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
@@ -814,16 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/users/users-list/users-list.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
-          <folding>
-            <element signature="n#table#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/users/users-list/users-list.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -844,13 +836,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/users/users-list/users-list.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+          <folding>
+            <element signature="n#table#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/bugs/bugs-list/bugs-list.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="146" column="29" selection-start-line="146" selection-start-column="29" selection-end-line="146" selection-end-column="29" />
+        <state relative-caret-position="153">
+          <caret line="154" lean-forward="true" selection-start-line="154" selection-end-line="154" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/programs/programs-edit/programs-edit.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="14" column="107" selection-start-line="14" selection-start-column="107" selection-end-line="14" selection-end-column="107" />
         </state>
       </provider>
     </entry>
