@@ -3,10 +3,9 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProgramService } from '../../services/program.service';
-import { DialogConfirmDeleteUser } from '../../users/users-list/users-list.component';
 import { AuthenticationService } from '../../services/authentication.service';
-import { debounceTime } from 'rxjs-compat/operator/debounceTime';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import 'rxjs/Rx' ;
 
 @Component({
   selector: 'app-programs-list',
@@ -74,26 +73,44 @@ export class ProgramsListComponent implements OnInit {
         });
     }
 
+    downloadFile(data) {
+        const blob = new Blob([data], {type: 'text/plain'});
+
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'programs-export.xml';
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+
+        setTimeout(function () {
+            window.URL.revokeObjectURL(data);
+            link.remove();
+        }, 100);
+    }
+
     exportResults(type) {
         this.programService.exportPrograms({type: type}).subscribe(res => {
-            const csvList = res.result.split('#');
-            const headers = csvList.shift().split(',');
+            if (type == 'CSV') {
+                const csvList = res.result.split('#');
+                const headers = csvList.shift().split(',');
 
-            const options = {
-                headers: headers,
-            };
+                const options = {
+                    headers: headers,
+                };
 
-            let finalData = [];
-            for (let row of csvList) {
-                let dataSplitted = {};
-                const rowSplitted = row.split(',');
+                let finalData = [];
+                for (let row of csvList) {
+                    let dataSplitted = {};
+                    const rowSplitted = row.split(',');
 
-                rowSplitted.forEach((val, idx) => {
-                    dataSplitted[headers[idx]] = val;
-                });
-                finalData.push(dataSplitted);
+                    rowSplitted.forEach((val, idx) => {
+                        dataSplitted[headers[idx]] = val;
+                    });
+                    finalData.push(dataSplitted);
+                }
+                new Angular5Csv(finalData, 'programs-export', options);
+            } else {
+                this.downloadFile(res.result);
             }
-            new Angular5Csv(finalData, 'programs-export', options);
         });
     }
 

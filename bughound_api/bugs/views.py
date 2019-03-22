@@ -89,26 +89,61 @@ def export_results(request):
 
     queryset = Bug.objects.filter(**query_params)
 
-    finalStr = 'Program,Program Version,Report Type,Severity,Summary,Reproducible,Description,Suggested Fix,Reported by,' \
+    finalStr = ''
+    if type.lower() == 'csv':
+        finalStr = 'Program,Program Version,Report Type,Severity,Summary,Reproducible,Description,Suggested Fix,Reported by,' \
                'Reported Date,Functionnal Area,Assigned To,Comments,Status,Priority,Resolution,Resolution version'
 
-    for obj in queryset:
-        finalStr += '#'
-        functionnal_area = ''
-        if obj.functional_area is not None:
-            functionnal_area = obj.functional_area.name
+        for obj in queryset:
+            finalStr += '#'
+            functionnal_area = ''
+            if obj.functional_area is not None:
+                functionnal_area = obj.functional_area.name
 
-        assigned_to = ''
-        if obj.assigned_to is not None:
-            assigned_to = obj.assigned_to.username
+            assigned_to = ''
+            if obj.assigned_to is not None:
+                assigned_to = obj.assigned_to.username
 
-        resolution = ''
-        if obj.resolution_version is not None:
-            resolution = obj.resolution_version.name
+            resolution = ''
+            if obj.resolution_version is not None:
+                resolution = obj.resolution_version.name
 
-        finalStr += '{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}'.format(obj.program.name, obj.bug_version.name, obj.get_report_type_display(), obj.get_severity_display(),
-               obj.summary, obj.reproducible, obj.description, obj.suggested_fix, obj.reported_by.username, obj.reported_date,
-               functionnal_area, assigned_to, obj.comments, obj.get_status_display(), obj.get_priority_display(),
-               obj.get_resolution_display(), resolution)
+            finalStr += '{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}'.format(obj.program.name, obj.bug_version.name, obj.get_report_type_display(), obj.get_severity_display(),
+                   obj.summary, obj.reproducible, obj.description, obj.suggested_fix, obj.reported_by.username, obj.reported_date,
+                   functionnal_area, assigned_to, obj.comments, obj.get_status_display(), obj.get_priority_display(),
+                   obj.get_resolution_display(), resolution)
+
+    elif type.lower() == 'xml':
+        for obj in queryset:
+            functionnal_area = ''
+            if obj.functional_area is not None:
+                functionnal_area = obj.functional_area.name
+
+            assigned_to = ''
+            if obj.assigned_to is not None:
+                assigned_to = obj.assigned_to.username
+
+            resolution = ''
+            if obj.resolution_version is not None:
+                resolution = obj.resolution_version.name
+
+            finalStr += '<bug>\n<program>{}</program>\n<version>{}</version>\n<report-type>{}</report-type>\n' \
+                        '<severity>{}</severity>\n<summary>{}</summary>\n<reproducible>{}</reproducible>\n' \
+                        '<description>{}</description>\n<suggested-fix>{}</suggested-fix>\n<reported-by>{}</reported-by>\n' \
+                        '<reported-date>{}</reported-date>\n<functionnal-area>{}</functionnal-area>\n<assigned-to>{}</assigned-to>\n' \
+                        '<comments>{}</comments>\n<status>{}</status>\n<priority>{}</priority>\n<resolution>{}</resolution>\n' \
+                        '<resolution-version>{}</resolution-version>\n</bug>\n'.format(obj.program.name, obj.bug_version.name,
+                                                                               obj.get_report_type_display(),
+                                                                               obj.get_severity_display(),
+                                                                               obj.summary, obj.reproducible,
+                                                                               obj.description, obj.suggested_fix,
+                                                                               obj.reported_by.username,
+                                                                               obj.reported_date,
+                                                                               functionnal_area, assigned_to,
+                                                                               obj.comments, obj.get_status_display(),
+                                                                               obj.get_priority_display(),
+                                                                               obj.get_resolution_display(), resolution)
+        finalStr = '<bugs>\n{}</bugs>'.format(finalStr)
+
 
     return Response({'result': finalStr})

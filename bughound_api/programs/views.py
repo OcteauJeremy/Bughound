@@ -99,16 +99,30 @@ def export_results(request):
 
     queryset = Program.objects.filter(**query_params)
 
-    finalStr = 'Name,Version,Areas,Open Bugs,Closed Bugs,Resolved Bugs'
+    finalStr = ''
+    if type.lower() == 'csv':
+        finalStr = 'Name,Version,Areas,Open Bugs,Closed Bugs,Resolved Bugs'
 
-    for obj in queryset:
-        finalStr += '#'
-        versions_str = ';'.join([x.name for x in obj.versions.all()])
-        areas_str = ';'.join([x.name for x in obj.areas.all()])
-        nb_open = obj.bugs.filter(status=0).count()
-        nb_close = obj.bugs.filter(status=1).count()
-        nb_resolve = obj.bugs.filter(status=2).count()
+        for obj in queryset:
+            finalStr += '#'
+            versions_str = ';'.join([x.name for x in obj.versions.all()])
+            areas_str = ';'.join([x.name for x in obj.areas.all()])
+            nb_open = obj.bugs.filter(status=0).count()
+            nb_close = obj.bugs.filter(status=1).count()
+            nb_resolve = obj.bugs.filter(status=2).count()
 
-        finalStr += '{},{},{},{},{},{}'.format(obj.name, versions_str, areas_str, nb_open, nb_close, nb_resolve)
+            finalStr += '{},{},{},{},{},{}'.format(obj.name, versions_str, areas_str, nb_open, nb_close, nb_resolve)
+    elif type.lower() == 'xml':
+        for obj in queryset:
+            versions_str = '\n'.join(['<version>{}</versions>'.format(x.name) for x in obj.versions.all()])
+            areas_str = '\n'.join(['<area>{}</area>'.format(x.name) for x in obj.areas.all()])
+            nb_open = obj.bugs.filter(status=0).count()
+            nb_close = obj.bugs.filter(status=1).count()
+            nb_resolve = obj.bugs.filter(status=2).count()
+
+            finalStr += '<program>\n<name>{}</name>\n<versions>\n{}\n</versions>\n<areas>\n{}\n</areas>\n' \
+                        '<openbugs>{}</openbugs>\n<closedbugs>{}</closedbugs>\n<resolvedbugs>{}</resolvedbugs>\n' \
+                        '</program>\n'.format(obj.name, versions_str, areas_str, nb_open, nb_close, nb_resolve)
+        finalStr = '<programs>\n{}</programs>'.format(finalStr)
 
     return Response({'result': finalStr})

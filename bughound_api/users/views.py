@@ -80,10 +80,18 @@ def export_results(request):
 
     queryset = User.objects.all().exclude(is_superuser=True)
 
+    finalStr = ''
     if type.lower() == 'csv':
         finalStr = 'First Name,Last Name,Username,Email,Type'
         for user in queryset:
             finalStr += '#{0},{1},{2},{3},{4}'.format(user.first_name, user.last_name, user.username, user.email,
                                                      user.groups.first().name)
+    elif type.lower() == 'xml':
+        for user in queryset:
+            finalStr += '<user>\n<firstname>{0}</firstname>\n<lastname>{1}</lastname>\n<username>{2}</username>\n' \
+                        '<email>{3}</email>\n<type>{4}</type>\n</user>\n'.format(user.first_name, user.last_name, user.username, user.email,
+                                                     user.groups.first().name)
+
+        finalStr = '<users>\n{}</users>'.format(finalStr)
 
     return Response({'result': finalStr})
