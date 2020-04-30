@@ -369,6 +369,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@ng-select/ng-select@^2.15.3":
+  version "2.20.5"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-2.20.5.tgz#bbf1b26b34bca576b13241453bdf92aa16de37a5"
+  integrity sha512-S9R3op3kd8XmAI99exPOTXwDcYOsDngIhkdsQuV1jq/rSVKdJZ6gQY1VWS5REjVnqbKbxbWAx4JA38bum/8Z7g==
+  dependencies:
+    tslib "^1.9.0"
+
 "@ngtools/webpack@7.3.3":
   version "7.3.3"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-7.3.3.tgz#f63eb3d5674f4a850edc76d7de590da98c2d2615"
@@ -728,6 +735,18 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
+
+angular2-moment@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/angular2-moment/-/angular2-moment-1.9.0.tgz#d198a4d9bc825f61de19106ac7ea07a78569f5a1"
+  integrity sha512-ybPjYizpKVWAI2Z4AqxAS6s3FMkF3+zRpfvxX1wIdSJUFjl83XxQ5f2yn7retX68NSYZZ/JTK9KGnvOzZfrIZw==
+  dependencies:
+    moment "^2.19.3"
+
+angular5-csv@^0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/angular5-csv/-/angular5-csv-0.2.11.tgz#1ce7dd2d074480f2675d35877c3013f7afe11b42"
+  integrity sha512-N2uhl5mr1iziUclBH+NZ/ir5WbQyzwtJ979OaS8p1bRXvh4+NIYOAn9b34zr2IbtTvKWvdn/pgXrXHi35lOO5g==
 
 animate.css@^3.7.0:
   version "3.7.0"
@@ -2767,6 +2786,11 @@ file-loader@3.0.1:
     loader-utils "^1.0.2"
     schema-utils "^1.0.0"
 
+file-saver@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.2.tgz#06d6e728a9ea2df2cce2f8d9e84dfcdc338ec17a"
+  integrity sha512-Wz3c3XQ5xroCxd1G8b7yL0Ehkf0TC9oYC6buPFkNnU9EnaPlifeAFCyCh+iewXTyFRcg0a6j3J7FmJsIhlhBdw==
+
 filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
@@ -4032,10 +4056,10 @@ jquery-mousewheel@~3.1.13:
   resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
   integrity sha1-BvAzXxbjU6aV5yBr9QUDy1I6buU=
 
-jquery@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
+jquery@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.0.tgz#9980b97d9e4194611c36530e7dc46a58d7340fc9"
+  integrity sha512-Xb7SVYMvygPxbFMpTFQiHh1J7HClEaThguL15N/Gg37Lri/qKyhRGZYzHRyLH8Stq3Aow0LsHO2O2ci86fCrNQ==
 
 js-base64@^2.1.8:
   version "2.5.1"
@@ -4770,6 +4794,11 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.19.3, moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -4851,6 +4880,16 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
+ng-bootstrap-to-bootstrap-3@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/ng-bootstrap-to-bootstrap-3/-/ng-bootstrap-to-bootstrap-3-0.7.0.tgz#230ad637cbc16c919bc09eaa6f331e22b7be0322"
+  integrity sha1-IwrWN8vBbJGbwJ6qbzMeIre+AyI=
+
+ng-pick-datetime@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ng-pick-datetime/-/ng-pick-datetime-7.0.0.tgz#c78d1cfaee183691a4a44cd4f39c98f9c1d1595f"
+  integrity sha512-SbS+zKX6gOlYpgH8zDSx2EL32ak0Z0y1Ksu1ECP/FiwVBM2mHgbzdfyDYhMmKFB0GKn5yCwXTandR1FCQXe62w==
+
 ng-select2@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/ng-select2/-/ng-select2-1.0.8.tgz#000427bd6c6931a23de7eb43ac26daf201977d09"
@@ -4858,10 +4897,36 @@ ng-select2@^1.0.8:
   dependencies:
     tslib "^1.9.0"
 
+ngx-cookie-service@^2.1.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-2.4.0.tgz#293de6d393220f8fe5712a4c9f724042404e6971"
+  integrity sha512-uR/6mCQ1t+XY5G1/irqRhoEddx1PPtmz7JHM/2nn5yQmicnj+n48x8C2PMxwaYDHKRh7QPQ9G5scR36Mmdz09A==
+
+ngx-filesaver@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ngx-filesaver/-/ngx-filesaver-2.2.1.tgz#25b4cea8fe8ccb9ee9a4ae39d154ee161bcb1acf"
+  integrity sha512-W8HK3Fw/mnHVyOTFzw3jSGjij49RO2NnWZlltkhNON9UGZ9ST82pohxaMIKScMZbyE+EGo0Msjtc3Tx0c2kH4g==
+  dependencies:
+    tslib "^1.9.0"
+
+ngx-mat-select-search@^1.6.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/ngx-mat-select-search/-/ngx-mat-select-search-1.8.0.tgz#0d2a621e3ca50a82e1d230999ccd39d6f78ca6c9"
+  integrity sha512-oCuGWn0GYxqpOZ4mdJvHJ0l/vctVQ9kxMKEUy6HZ5bGx4dCBUsolwnQeUDM+vwGtlXoBzYQ27cxYgbfNSyuabg==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-toastr@^9.1.2:
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-9.1.2.tgz#2e59cfc02255f94556cfe3690a36c57a6a209796"
   integrity sha512-XhK3xA73ueF+YZawtqKs6+FQ1OMdx+EzCPihNTMSSXDthglfcgzDzia/OMSGjhx0h7/AK4N/BAbFau9L5RqVDg==
+  dependencies:
+    tslib "^1.9.0"
+
+ngx-uploader@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-uploader/-/ngx-uploader-7.1.0.tgz#0da19acafb97ad1e22e512a13d9ebae025db85f7"
+  integrity sha512-gPUf04Idd2fMMVMjOQSIx+v9Q9Jdbrxp9UiSnfzIb1JzbfwZih/FtkMYFyNcQ+zNi8dhaotMe412PCvPDHDugg==
   dependencies:
     tslib "^1.9.0"
 
