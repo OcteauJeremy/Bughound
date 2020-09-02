@@ -42,7 +42,7 @@
     "chartist": "0.11.0",
     "core-js": "2.5.7",
     "file-saver": "^2.0.1",
-    "googleapis": "33.0.0",
+    "googleapis": "39.1.0",
     "jquery": "3.3.1",
     "moment": "^2.24.0",
     "ng-bootstrap-to-bootstrap-3": "^0.7.0",
